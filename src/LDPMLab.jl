@@ -37,9 +37,24 @@ mutable struct ldpmwsteel
     #Tet::Vector{Int64}                                                          # ID of tetrahedron
     #Area::Vector{Float64}                                                       # Area of each triangle (collated in a vector)
 end
-LDPM_w_steel = ldpmwsteel([0, 0.0], [0, 0.0], [0, 0.0])
+LDPM_bar_reforced = ldpmwsteel([0, 0.0], [0, 0.0], [0, 0.0])
 
+"""
+    particle_distribution(model_name, particle_save="Yes", particle_dirc_and_name="LDPM_particle_distribution")
 
+Excute particle distribution in material volume and save the data of particle distribution.
+
+### Input
+
+- `model_name` -- symbol describing the model type used
+   - `:LDPM` -- uses LDPM
+   - `:LDPM_bar_reforced` -- uses rank1 update
+- `particle_save` -- symbol describing wether saving particle distribution
+    - `:Yes` -- save a JLD2 file with particle coordinates and their corresponding diameters. By default, `:Yes` is used. Other strings except `Yes` means not storing the current particle distribution.
+    Saving particle distribution is encouraged so that the following solutions can use the same model mesh, excluding the influence of meshing on solutions.
+- `particle_dirc_and_name` -- a string indicating the filefolder and filename saving particle distribution. By default, `LDPM_particle_distribution`  is used. This argument can be `D:/Juliafiles/LDPM_particle_distribution` as well.
+
+"""
 function particle_distribution(model_name, particle_save="Yes", particle_dirc_and_name="LDPM_particle_distribution")
     if typeof(model_name) == ldpm
         include("0.0 generate particles.jl")
@@ -64,6 +79,7 @@ end
 function load_particle_distribution(particle_dirc_and_name="LDPM_particle_distribution")
     @load "$particle_dirc_and_name.jld2" pointsresult pointsdiameterfinal
 end
+
 function Meshing(model_name, mesh_plot="Yes", mesh_dirc_and_name="LDPM_mesh_facets")
     if typeof(model_name) == ldpm
         include("1_Random_Meshing_Delaunay.jl")
@@ -80,13 +96,55 @@ function Meshing(model_name, mesh_plot="Yes", mesh_dirc_and_name="LDPM_mesh_face
         include("4_Connectivity_Matrix_steel.jl") # Evaluate Connections Between Particles
         if mesh_plot == "Yes"
             include("4.5 Mesh plot.jl")
-            include("4.6 steel_plot.jl")
+            include("4.6 Steel plot.jl")
         end
     end
 end
 
 
+"""
+    eigenbox(A[, method=Rohn()])
 
+Returns an enclosure of all the eigenvalues of `A`. If `A` is symmetric, then the
+output is a real interval, otherwise it is a complex interval.
+
+### Input
+
+- `A` -- square interval matrix
+- `method` -- method used to solve the symmetric interval eigenvalue problem (bounding
+    eigenvalues of general matrices is also reduced to the symmetric case).
+    Possible values are
+
+      - `Rohn` -- (default) fast method to compute an enclosure of the eigenvalues of
+            a symmetric interval matrix
+      - `Hertz` -- finds the exact hull of the eigenvalues of a symmetric interval
+            matrix, but has exponential complexity.
+
+### Algorithm
+
+The algorithms used by the function are described in [[HLA13]](@ref).
+
+### Notes
+
+The enclosure is not rigorous, meaning that the real eigenvalue problems solved internally
+utilize normal floating point computations.
+
+### Examples
+
+```jldoctest
+julia> A = [0 -1 -1; 2 -1.399.. -0.001 0; 1 0.5 -1]
+3×3 Matrix{Interval{Float64}}:
+ [0, 0]  [-1, -1]                       [-1, -1]
+ [2, 2]       [-1.39901, -0.000999999]    [0, 0]
+ [1, 1]        [0.5, 0.5]               [-1, -1]
+
+julia> eigenbox(A)
+[-1.90679, 0.970154] + [-2.51903, 2.51903]im
+
+julia> eigenbox(A, Hertz())
+[-1.64732, 0.520456] + [-2.1112, 2.1112]im
+```
+"""
 function Boundary_setting(fixed_region=[[[0 10; 0 200; 65 70], [3, 4, 5]], [[100 110; 0 200; 65 70], [3, 4, 5]], [[190 200; 0 200; 65 70], [3, 4, 5]]], loaded_region=[[[0 10; 0 200; 65 70], [3, 4, 5], [-0.2, -0.1, 0.1]], [[100 110; 0 200; 65 70], [3, 4, 5], [-0.2, -0.1, 0.1]], [[190 200; 0 200; 65 70], [3, 4, 5], [-0.2, -0.1, 0.1]]], plot_boundary="Yes") #unit of velocity mm/sec
     include("5_Boundary.jl")
 end
@@ -125,16 +183,16 @@ function post_process(model_name, relative_time_of_cracking=[0.2, 0.4, 0.5], cra
 end
 
 export load_particle_distribution, particle_distribution, Meshing, Boundary_setting, Solutions, post_process,
-    LDPM, LDPM_w_steel
+    LDPM, LDPM_bar_reforced
 end
 
 # #!use of package, units: mm, N, Mpa
 # #dimen1, dimen2, dimen3, c, w_over_c, da, d0, nF, Rhoc, Rhow, vair, magnifyp
 # LDPM.geometry_parameters = [200, 200, 70, 190 * 10^-9, 0.9, 15, 10, 0.45, 3150 * 10^-9, 1000 * 10^-9, 3.5 / 100, 1.1]
 # #dimen1, dimen2, dimen3, c, w_over_c, da, d0, nF, Rhoc, Rhow, vair, magnifyp, height_S, diameter_S
-# LDPM_w_steel.geometry_parameters = [200, 200, 70, 190 * 10^-9, 0.9, 15, 10, 0.45, 3150 * 10^-9, 1000 * 10^-9, 3.5 / 100, 1.1, 20.0, 16.0]
+# LDPM_bar_reforced.geometry_parameters = [200, 200, 70, 190 * 10^-9, 0.9, 15, 10, 0.45, 3150 * 10^-9, 1000 * 10^-9, 3.5 / 100, 1.1, 20.0, 16.0]
 # #traverse_distribution 
-# LDPM_w_steel.steel_layout = [50, 100, 150]
+# LDPM_bar_reforced.steel_layout = [50, 100, 150]
 
 # particle_distribution(; model_name, Geometry_save="Yes", Geometry_dirc_and_name="LDPM_geometry")
 # load_particle_distribution(particle_dirc_and_name="LDPM_particle_distribution")
@@ -163,7 +221,7 @@ end
 # #fu = 650 #Mpa
 # #epsi_sh = 0.02
 # #Esh = 833.33 #Mpa
-# LDPM_w_steel.mechanical_parameters = [45000.0, 45000.0, 3.0, -50.0, 10.0, 0.07, 0.35, 0.25, 2.0, 0.8, 2.5e-6, 1.0, 5.0, 11250.0, 0.0, 1.96 * 10^5, 500, 650, 0.02, 833.33]
+# LDPM_bar_reforced.mechanical_parameters = [45000.0, 45000.0, 3.0, -50.0, 10.0, 0.07, 0.35, 0.25, 2.0, 0.8, 2.5e-6, 1.0, 5.0, 11250.0, 0.0, 1.96 * 10^5, 500, 650, 0.02, 833.33]
 
 # Solutions(model_name, scale_delata_time=1.0, t_final=0.05) #loading [velocity, direction], Δt= round(2/median(ω_n),digits=5)
 # post_process(model_name, relative_time_of_cracking=[0.2, 0.4, 0.5], crack_plot_dirc_and_name="cracking pattern", output_displacement_directions=[[[0 10; 0 200; 65 70], [3, 4, 5]], [[100 110; 0 200; 65 70], [3, 4, 5]], [[190 200; 0 200; 65 70], [3, 4, 5]]], output_load_directions=[[[0 10; 0 200; 65 70], [3, 4, 5]], [[100 110; 0 200; 65 70], [3, 4, 5]], [[190 200; 0 200; 65 70], [3, 4, 5]]], step_interval=300, load_dis_out_name="200*200*70 deck", plot_dis_load_region="Yes")

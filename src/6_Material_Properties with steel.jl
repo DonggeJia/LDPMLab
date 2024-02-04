@@ -153,7 +153,7 @@ function MassMatrix(gdl, TRI, Tet_Mass, damping)
 end
 
 
-Mat_parameters = LDPM_w_steel.mechanical_parameters; # [E_m E_a σ_t σ_c σ_s G_t G_s α n_t n_c ρ kc_1 kc_2 K_c ζ]
+Mat_parameters = LDPM_bar_reforced.mechanical_parameters; # [E_m E_a σ_t σ_c σ_s G_t G_s α n_t n_c ρ kc_1 kc_2 K_c ζ]
 const k1 = -Mat_parameters[3]*Mat_parameters[4]/Mat_parameters[5]^2; # Stress Space Elliptic Boundary Parameter
 const k2 = -Mat_parameters[3]*Mat_parameters[4]; # Stress Space Elliptic Boundary Parameter
 const sigma_t = Mat_parameters[3];# Extract Tension Limit from Mat_parameters Vector

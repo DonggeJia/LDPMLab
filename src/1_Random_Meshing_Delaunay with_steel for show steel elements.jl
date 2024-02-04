@@ -1,11 +1,4 @@
-cd(@__DIR__)
-using LinearAlgebra
-using DelimitedFiles
-using Statistics
-using CSV
-using Tables
-using TetGen
-using PlotlyJS
+
 mutable struct RawTetGenIO{T}
     pointlist::Matrix
 end

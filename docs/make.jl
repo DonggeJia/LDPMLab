@@ -17,7 +17,7 @@ makedocs(;
         "Tutorials" => "Tutorials.md",
         "Example" => ["Mechanical response" => "mechanical_response.md",
             "Mass transport" => "mass_transport.md",
-            "Embeding linear Reinforcement" => "Embeding_linear_Reinforcement.md"],
+            "Bar-Reinforced LDPM" => "Embedded_bar_Reinforcement.md"],
         "Real applications" => "Real applications.md",
         "API" => "API.md",
         "References" => "references.md",
