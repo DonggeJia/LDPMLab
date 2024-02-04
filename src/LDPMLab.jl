@@ -37,7 +37,7 @@ end
 LDPM_w_steel = ldpmwsteel([0,0.0], [0,0.0], [0,0.0])
 
 
-function particle_distribution(model_name, Geometry_save = "Yes", Geometry_dirc_and_name = "LDPM_particle_distribution")
+function particle_distribution(model_name, particle_save = "Yes", particle_dirc_and_name = "LDPM_particle_distribution")
     if typeof(model_name) == ldpm
     include("0.0 generate particles.jl")
     include("0.1 particle position.jl")
@@ -45,8 +45,8 @@ function particle_distribution(model_name, Geometry_save = "Yes", Geometry_dirc_
         include("0.0 generate particles with steel.jl")
         include("0.1 particle position with steel.jl")
     end
-    if Geometry_save == "Yes"
-        @save "$Geometry_dirc_and_name.jld2" pointsresult pointsdiameterfinal
+    if particle_save == "Yes"
+        @save "$particle_dirc_and_name.jld2" pointsresult pointsdiameterfinal
     end
     d1=collect(d0:0.05:da)
     cdf(d) = ((1-(d0/d)^q))/((1-(d0/da)^q))
@@ -58,6 +58,9 @@ function particle_distribution(model_name, Geometry_save = "Yes", Geometry_dirc_
     display(ll) 
 end
 
+function load_particle_distribution(particle_dirc_and_name = "LDPM_particle_distribution")
+    @load "$particle_dirc_and_name.jld2" pointsresult pointsdiameterfinal
+end
 function Meshing(model_name, mesh_plot = "Yes", mesh_dirc_and_name = "LDPM_mesh_facets")
     if typeof(model_name) == ldpm
         include("1_Random_Meshing_Delaunay.jl")
@@ -118,7 +121,8 @@ function post_process(model_name, relative_time_of_cracking = [0.2,0.4,0.5], cra
         include("out_load_displacement.jl")
 end
 
-export particle_distribution, Meshing, Boundary_setting, Solutions, post_process
+export load_particle_distribution, particle_distribution, Meshing, Boundary_setting, Solutions, post_process,
+LDPM, LDPM_w_steel
 end
 
 #!use of package, units: mm, N, Mpa
@@ -130,6 +134,7 @@ LDPM_w_steel.geometry_parameters = [200, 200, 70, 190 * 10^-9, 0.9, 15, 10, 0.45
 LDPM_w_steel.steel_layout = [50,100,150]
 
 particle_distribution(;model_name, Geometry_save = "Yes", Geometry_dirc_and_name = "LDPM_geometry")
+load_particle_distribution(particle_dirc_and_name = "LDPM_particle_distribution")
 Meshing(model_name, mesh_plot = "Yes", mesh_dirc_and_name = "LDPM_mesh_facets")
 Boundary_setting(fixed_region = [[[0 10;0 200;65 70],[3,4,5]],[[100 110;0 200;65 70],[3,4,5]],[[190 200;0 200;65 70],[3,4,5]]], loaded_region = [[[0 10;0 200;65 70],[3,4,5]],[[100 110;0 200;65 70],[3,4,5]],[[190 200;0 200;65 70],[3,4,5]]], plot_boundary = "Yes")
 
