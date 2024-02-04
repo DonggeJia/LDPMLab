@@ -14,10 +14,15 @@ makedocs(;
     ),
     pages=[
         "Home" => "index.md",
-    "Tutorials" => "Tutorials.md",
-    
-    ],
-)
+        "Tutorials" => "Tutorials.md",
+        "Example" => ["Mechanical response" => "mechanical_response.md",
+            "Mass transport" => "mass_transport.md",
+            "Embeding linear Reinforcement" => "Embeding_linear_Reinforcement.md"],
+        "Real applications" => "Real applications.md",
+        "API" => "API.md",
+        "References" => "references.md",
+        "Contributing" => "contributing_guide.md"
+    ])
 
 deploydocs(;
     repo="github.com/DonggeJia/LDPMLab.jl",

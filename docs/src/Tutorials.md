@@ -1,9 +1,16 @@
+```@meta
+CurrentModule = LDPMLab
+```
+
+```@index
+Pages = ["Tutorials.md"]
+```
 # LDPMLab
 
-[![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://DonggeJia.github.io/LDPMLab.jl/stable/)
-[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://DonggeJia.github.io/LDPMLab.jl/dev/)
-[![Coverage](https://codecov.io/gh/DonggeJia/LDPMLab.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/DonggeJia/LDPMLab.jl)
+Documentation for [LDPMLab](https://github.com/DonggeJia/LDPMLab.jl).
 
+```@index
+```
 
 #!use of package, units: mm, N, Mpa
 #dimen1, dimen2, dimen3, c, w_over_c, da, d0, nF, Rhoc, Rhow, vair, magnifyp
@@ -44,3 +51,7 @@ LDPM_w_steel.mechanical_parameters = [45000.0, 45000.0, 3.0, -50.0, 10.0, 0.07, 
 
 Solutions(model_name, scale_delata_time=1.0, t_final=0.05) #loading [velocity, direction], Δt= round(2/median(ω_n),digits=5)
 post_process(model_name, relative_time_of_cracking=[0.2, 0.4, 0.5], crack_plot_dirc_and_name="cracking pattern", output_displacement_directions=[[[0 10; 0 200; 65 70], [3, 4, 5]], [[100 110; 0 200; 65 70], [3, 4, 5]], [[190 200; 0 200; 65 70], [3, 4, 5]]], output_load_directions=[[[0 10; 0 200; 65 70], [3, 4, 5]], [[100 110; 0 200; 65 70], [3, 4, 5]], [[190 200; 0 200; 65 70], [3, 4, 5]]], step_interval=300, load_dis_out_name="200*200*70 deck", plot_dis_load_region="Yes")
+
+```@autodocs
+Modules = [LDPMLab]
+```
