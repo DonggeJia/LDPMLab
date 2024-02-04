@@ -1,6 +1,4 @@
-using Distances
-using Colors
-using GeometryBasics
+
 particledia = sort(particledia, rev=true)
 L1 = dimen1 #mm
 L2 = dimen2 #mm

@@ -14,6 +14,9 @@ using DataFrames
 using Printf
 using PlotlyJS
 using Format
+using Distances
+using Colors
+using GeometryBasics
 
 mutable struct ldpm
     geometry_parameters::Array{Float64,1}                                                 # Projected Elements composing the connection

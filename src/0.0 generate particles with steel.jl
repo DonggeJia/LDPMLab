@@ -1,4 +1,4 @@
-using PlotlyJS
+
 height_S = LDPM_w_steel.geometry_parameters[end-1] #mm
 traverse_distribution = LDPM_w_steel.steel_layout
 diameter_S = LDPM_w_steel.geometry_parameters[end] #mm
