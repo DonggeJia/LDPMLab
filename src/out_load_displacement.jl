@@ -12,20 +12,20 @@
 #support_end  = width-Geometry_parameters[12]       
 F_residual = internal - external
 #Point_loading=Geometry_parameters[13,1];
-output_direction_dis = zeros(Int64, gdl);
+output_direction_dis = zeros(Int64, gdlS);
 #output_displacement_directions
 for region in output_displacement_directions
-    output_points = intersect(findall(region[1][1, 1] .<= Positions[:, 1] .<= region[1][1, 2]), findall(region[1][2, 1] .<= Positions[:, 2] .<= region[1][2, 2]), findall(region[1][3, 1] .<= Positions[:, 3] .<= region[1][3, 2]))
+    output_points = intersect(findall(region[1][1, 1] .<= all_nodes_with_steel[:, 1] .<= region[1][1, 2]), findall(region[1][2, 1] .<= all_nodes_with_steel[:, 2] .<= region[1][2, 2]), findall(region[1][3, 1] .<= all_nodes_with_steel[:, 3] .<= region[1][3, 2]))
     for output_point in output_points # Nodes at the Bottom left are Restrained in UX, UY UZ, and UR1
         for index in region[2]
             output_direction_dis[gdl_n*(output_point-1)+index] = 1 ## bottom left nodes are restrained at x y, z, and ROTX direction
         end
     end
 end
-output_direction_load = zeros(Int64, gdl);
+output_direction_load = zeros(Int64, gdlS);
 #output_load_directions
 for region in output_load_directions
-    output_points = intersect(findall(region[1][1, 1] .<= Positions[:, 1] .<= region[1][1, 2]), findall(region[1][2, 1] .<= Positions[:, 2] .<= region[1][2, 2]), findall(region[1][3, 1] .<= Positions[:, 3] .<= region[1][3, 2]))
+    output_points = intersect(findall(region[1][1, 1] .<= all_nodes_with_steel[:, 1] .<= region[1][1, 2]), findall(region[1][2, 1] .<= all_nodes_with_steel[:, 2] .<= region[1][2, 2]), findall(region[1][3, 1] .<= all_nodes_with_steel[:, 3] .<= region[1][3, 2]))
     for output_point in output_points # Nodes at the Bottom left are Restrained in UX, UY UZ, and UR1
         for index in region[2]
             output_direction_load[gdl_n*(output_point-1)+index] = 2 ## bottom left nodes are restrained at x y, z, and ROTX direction
@@ -48,14 +48,14 @@ loading_dis_mark = output_direction_load + output_direction_dis
 
 if plot_dis_load_region == "Yes"
     text_ = []
-    for i in axes(Positions, 1)
+    for i in axes(all_nodes_with_steel, 1)
         if loading_dis_mark[i*gdl_n-5:i*gdl_n] == [0, 0, 0, 0, 0, 0]
             push!(text_, " ")
         else
             push!(text_, join(map(string, loading_dis_mark[i*gdl_n-5:i*gdl_n]))) # 1 indicates displacement extraction; 2 indicates load, 3 indicates both 
         end
     end
-    plt3d = PlotlyJS.scatter3d(; x=Positions[:, 1], y=Positions[:, 2], z=Positions[:, 3], text=text_,
+    plt3d = PlotlyJS.scatter3d(; x=all_nodes_with_steel[:, 1], y=all_nodes_with_steel[:, 2], z=all_nodes_with_steel[:, 3], text=text_,
         mode="markers+text", opacity=0.9, marker=attr(color="rgb(127, 127, 127)"))
     layout = Layout(margin=attr(l=40, r=40, t=40, b=40), scene_camera=attr(
         up=attr(x=0, y=0, z=1),

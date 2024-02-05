@@ -204,13 +204,13 @@ function Central_Difference_Integration(t_final, nel1, Δt)
             println("Computed Step #", n_i, " of ", n_inc, ".")
         end
     end
-    return displace, eps_, eps_n, eps_t, sigma_eff, sigma_N, sigma_T, internal, external
+    return gdlS, displace, eps_, eps_n, eps_t, sigma_eff, sigma_N, sigma_T, internal, external
     #
 end
 
 
 ## t_final=0.2
 #const n_inc = Int64(ceil(t_final / Δt)); # Number of Total Increments
-displace, eps_, eps_n, eps_t, sigma_eff, sigma_N, sigma_T, internal, external = Central_Difference_Integration(t_final, nel, Δt)
+gdlS, displace, eps_, eps_n, eps_t, sigma_eff, sigma_N, sigma_T, internal, external = Central_Difference_Integration(t_final, nel, Δt)
 
 #UUU = displace[:,end]
