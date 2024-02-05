@@ -2,9 +2,9 @@
 ## Steel_steel element and steel_concrete_bond element
 steel_uniques_ini = [[[i, i+1] for i = 1:length(nodes_S_total[1])-1]; [[i, i+1] for i = length(nodes_S_total[1])+1:length(nodes_S_total[1])+length(nodes_S_total[2])-1]; [[i, i+1] for i = length(nodes_S_total[1])+length(nodes_S_total[2])+1:length(nodes_S_total[1])+length(nodes_S_total[2])+ length(nodes_S_total[3])-1]]
 
-const steel_uniques = [steel_uniques_ini[i] + [n_nodes, n_nodes] for i in eachindex(steel_uniques_ini)]
+steel_uniques = [steel_uniques_ini[i] + [n_nodes, n_nodes] for i in eachindex(steel_uniques_ini)]
 
-const steel_bond_uniques = [[i+n_nodes, nodes_surround_steel_sequence[i]] for i in eachindex(nodes_surround_steel_sequence)]
+steel_bond_uniques = [[i+n_nodes, nodes_surround_steel_sequence[i]] for i in eachindex(nodes_surround_steel_sequence)]
 
 steel_uniques_ma = mapreduce(permutedims, vcat, steel_uniques)
 steel_bond_uniques_ma = mapreduce(permutedims, vcat, steel_bond_uniques)

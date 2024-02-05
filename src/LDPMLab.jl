@@ -39,6 +39,32 @@ mutable struct ldpmwsteel
 end
 LDPM_bar_reforced = ldpmwsteel([0, 0.0], [0, 0.0], [0, 0.0])
 
+LDPM.geometry_parameters = [200, 200, 70, 190 * 10^-9, 0.9, 15, 10, 0.45, 3150 * 10^-9, 1000 * 10^-9, 3.5 / 100, 1.1]
+#dimen1, dimen2, dimen3, c, w_over_c, da, d0, nF, Rhoc, Rhow, vair, magnifyp, height_S, diameter_S
+LDPM_bar_reforced.geometry_parameters = [200, 200, 70, 190 * 10^-9, 0.9, 15, 10, 0.45, 3150 * 10^-9, 1000 * 10^-9, 3.5 / 100, 1.1, 20.0, 16.0]
+#traverse_distribution 
+LDPM_bar_reforced.steel_layout = [50, 100, 150]
+
+const Mat_parameters = LDPM_bar_reforced.mechanical_parameters # [E_m E_a σ_t σ_c σ_s G_t G_s α n_t n_c ρ kc_1 kc_2 K_c ζ]
+const k1 = -Mat_parameters[3] * Mat_parameters[4] / Mat_parameters[5]^2 # Stress Space Elliptic Boundary Parameter
+const k2 = -Mat_parameters[3] * Mat_parameters[4] # Stress Space Elliptic Boundary Parameter
+const sigma_t = Mat_parameters[3]# Extract Tension Limit from Mat_parameters Vector
+const sigma_c = Mat_parameters[4] # Extract Compression Limit from Mat_parameters Vector
+const sigma_s = Mat_parameters[5] # Extreact Shear Limit from Mat_parameters Vector
+const alpha = Mat_parameters[8] # Extract Coupling Parameter
+const K_c = Mat_parameters[14] # Extract Compressive Exponential Initial Slop Parameter
+const kc2 = Mat_parameters[13] # Lateral Confinement Parameter 1
+const kc1 = Mat_parameters[12] # Lateral Confinement Parameter 2
+const n_c = Mat_parameters[10] # Extract Compressive Exponential Parameter
+const n_t = Mat_parameters[9] # Extract Tensile Exponential Parameter
+
+const E_steel = LDPM_bar_reforced.mechanical_parameters[end-3]
+const fyi = LDPM_bar_reforced.mechanical_parameters[end-2]
+#fu = 650 #Mpa
+const epsi_sh = LDPM_bar_reforced.mechanical_parameters[end-1]
+const Esh = LDPM_bar_reforced.mechanical_parameters[end] #Mpa
+
+
 """
     particle_distribution(model_name, particle_save="Yes", particle_dirc_and_name="LDPM_particle_distribution")
 
@@ -74,6 +100,7 @@ function particle_distribution(model_name, particle_save="Yes", particle_dirc_an
     PlotlyJS.add_trace!(ll, (scatter(x=d1, y=F.(d1), mode="lines")))
     PlotlyJS.add_trace!(ll, scatter(x=diameter, y=FF, mode="markers"))#u-----
     display(ll)
+    return pointsresult, pointsdiameterfinal
 end
 
 function load_particle_distribution(particle_dirc_and_name="LDPM_particle_distribution")
@@ -99,6 +126,7 @@ function Meshing(model_name, mesh_plot="Yes", mesh_dirc_and_name="LDPM_mesh_face
             include("4.6 Steel plot.jl")
         end
     end
+    return steel_uniques, steel_bond_uniques, gdl, Positions, gdl_n, Connect, TRI, Unique_Connections, Elements, Tet, Unique_Connections_Elements, B
 end
 
 
@@ -147,6 +175,7 @@ julia> eigenbox(A, Hertz())
 """
 function Boundary_setting(fixed_region=[[[0 10; 0 200; 65 70], [3, 4, 5]], [[100 110; 0 200; 65 70], [3, 4, 5]], [[190 200; 0 200; 65 70], [3, 4, 5]]], loaded_region=[[[0 10; 0 200; 65 70], [3, 4, 5], [-0.2, -0.1, 0.1]], [[100 110; 0 200; 65 70], [3, 4, 5], [-0.2, -0.1, 0.1]], [[190 200; 0 200; 65 70], [3, 4, 5], [-0.2, -0.1, 0.1]]], plot_boundary="Yes") #unit of velocity mm/sec
     include("5_Boundary.jl")
+    return Boun, Boun1
 end
 
 function Solutions(model_name, scale_delata_time=1.0, t_final=0.8) #loading [velocity, direction], Δt= round(2/median(ω_n),digits=5)
@@ -170,6 +199,7 @@ function Solutions(model_name, scale_delata_time=1.0, t_final=0.8) #loading [vel
         include("15_Constitutive_Law steel and bond.jl") # Constitutive Law
         include("Central_Difference_Integration_with steel.jl")
     end
+    return displace, eps_, eps_n, eps_t, sigma_eff, sigma_N, sigma_T, internal, external
 end
 
 function post_process(model_name, relative_time_of_cracking=[0.2, 0.4, 0.5], crack_plot_dirc_and_name="cracking pattern", output_displacement_directions=[[[0 10; 0 200; 65 70], [3, 4, 5]], [[100 110; 0 200; 65 70], [3, 4, 5]], [[190 200; 0 200; 65 70], [3, 4, 5]]], output_load_directions=[[[0 10; 0 200; 65 70], [3, 4, 5]], [[100 110; 0 200; 65 70], [3, 4, 5]], [[190 200; 0 200; 65 70], [3, 4, 5]]], step_interval=300, load_dis_out_name="200*200*70 deck", plot_dis_load_region="Yes")

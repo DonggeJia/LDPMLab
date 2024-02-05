@@ -143,19 +143,6 @@ function MassMatrix(gdl, TRI, Tet_Mass, damping)
 end
 
 
-Mat_parameters = LDPM.mechanical_parameters; # [E_m E_a σ_t σ_c σ_s G_t G_s α n_t n_c ρ kc_1 kc_2 K_c ζ]
-const k1 = -Mat_parameters[3]*Mat_parameters[4]/Mat_parameters[5]^2; # Stress Space Elliptic Boundary Parameter
-const k2 = -Mat_parameters[3]*Mat_parameters[4]; # Stress Space Elliptic Boundary Parameter
-const sigma_t = Mat_parameters[3];# Extract Tension Limit from Mat_parameters Vector
-const sigma_c = Mat_parameters[4]; # Extract Compression Limit from Mat_parameters Vector
-const sigma_s = Mat_parameters[5]; # Extreact Shear Limit from Mat_parameters Vector
-const alpha = Mat_parameters[8]; # Extract Coupling Parameter
-const K_c = Mat_parameters[14]; # Extract Compressive Exponential Initial Slop Parameter
-const kc2 = Mat_parameters[13]; # Lateral Confinement Parameter 1
-const kc1 = Mat_parameters[12]; # Lateral Confinement Parameter 2
-const n_c = Mat_parameters[10]; # Extract Compressive Exponential Parameter
-const n_t = Mat_parameters[9]; # Extract Tensile Exponential Parameter
-
 E, K_t, K_s = ConstitutiveLawMat_parameters(Connect, Mat_parameters); # Calculate Effective Young's Modulus and the Exponential Softening Parameter for Every Connection According to the Required Fracture Energy
 Tet_Mass, Tet_Stiffness = TetrahedronStiffnessMatrix(TRI, Connect, Unique_Connections, Mat_parameters, Elements, E);
 

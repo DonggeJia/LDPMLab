@@ -1,16 +1,3 @@
-const E_steel = LDPM_bar_reforced.mechanical_parameters[end-3]
-const fyi = LDPM_bar_reforced.mechanical_parameters[end-2]
-#fu = 650 #Mpa
-const epsi_sh = LDPM_bar_reforced.mechanical_parameters[end-1]
-const Esh = LDPM_bar_reforced.mechanical_parameters[end] #Mpa
-
-
-
-
-
-
-
-
 function Constitutive_Law_steel(eps__n)
     if eps__n*E_steel < fyi
         return eps__n*E_steel/20

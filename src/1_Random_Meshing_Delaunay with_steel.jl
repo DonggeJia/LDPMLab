@@ -4,9 +4,9 @@ mutable struct RawTetGenIO{T}
 end
 # read values of the Geometrical parameters
 
-height_S = 20 #mm
-traverse_distribution = [dimen2 / 4, dimen2 / 4 * 2, dimen2 / 4 * 3]
-diameter_S = 4 #mm
+height_S = LDPM_bar_reforced.geometry_parameters[end-1] #mm
+traverse_distribution = LDPM_bar_reforced.steel_layout
+diameter_S = LDPM_bar_reforced.geometry_parameters[end] #mm
 
 Positions, Size = pointsresult, pointsdiameterfinal
 #
