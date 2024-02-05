@@ -25,10 +25,10 @@ for i in axes(TRI, 1)
         for lolp in traverse_distribution
             poin1 = [lolp, height_S]
             A = (poin2[2] - poin3[2])
-            B = (poin3[1] - poin2[1])
+            B111 = (poin3[1] - poin2[1])
             C = poin2[1] * poin3[2] - poin3[1] * poin2[2]
             t = dot(poin1-poin2,poin3-poin2)/dot(poin3-poin2,poin3-poin2)
-            if 0<t<1 && (abs(A * poin1[1] + B * poin1[2] + C) / sqrt(A^2 + B^2)) < diameter_S / 2
+            if 0<t<1 && (abs(A * poin1[1] + B111 * poin1[2] + C) / sqrt(A^2 + B111^2)) < diameter_S / 2
                 append!(eliminate_TRI, i)
                 @goto next_tetrahe
             end
@@ -56,10 +56,10 @@ n_tet = size(TRI, 1);
 V = ones(n_tet)
 for i in 1:n_tet
     A = Positions[TRI[i, 1], :]                                                                                                      # 1st Node of the Connection
-    B = Positions[TRI[i, 2], :]                                                                                                      # 2nd Node of the Connection
+    B111 = Positions[TRI[i, 2], :]                                                                                                      # 2nd Node of the Connection
     C = Positions[TRI[i, 3], :]                                                                                                      # 2nd Node of the Connection
     D = Positions[TRI[i, 4], :]
-    b_1 = A - B # Coordinates of P1 in the Reference System for the Current Point
+    b_1 = A - B111 # Coordinates of P1 in the Reference System for the Current Point
     c_1 = A - C # Coordinates of P2 in the Reference System for the Current Point
     d_1 = A - D # Coordinates of P3 in the Reference System for the Current Point
     V[i] = abs(dot(b_1, cross(c_1, d_1))) / 6 # mass of the Tetrahedron

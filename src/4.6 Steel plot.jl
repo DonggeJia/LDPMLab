@@ -1,5 +1,6 @@
 
-file = open("show steels.vtk", "w")
+function mesh_plot_steel(filename)
+file = open("$filename steels.vtk", "w")
 
 println(
     file,
@@ -7,7 +8,7 @@ println(
 3D spheres example
 ASCII
 DATASET POLYDATA
-POINTS $length(traverse_distribution)*2 float"
+POINTS $(length(traverse_distribution)*2) float"
 )
 #for i=1:length(pointsfinal)
 #println(file, facets_points[1][1], " ", facets_points[1][2]+3, " ", facets_points[1][3]+3)
@@ -17,7 +18,7 @@ for j in eachindex(traverse_distribution)
 end
 #end
 
-println(file, "LINES $length(traverse_distribution) $length(traverse_distribution)*3")
+println(file, "LINES $(length(traverse_distribution)) $(length(traverse_distribution)*3)")
 for i in eachindex(traverse_distribution)
     println(file, 2, " ", 2 * i - 2, " ", 2 * i - 1)
 end
@@ -25,6 +26,8 @@ end
 
 close(file)
 
+end
+mesh_plot_steel(filename)
 #run(`paraview /vtk_files/encastre_deck_$(steps[1]).vtk`)
 
 

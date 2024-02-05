@@ -36,10 +36,10 @@ n_tet = size(TRI,1);
 V=ones(n_tet)
 for i in 1:n_tet;
     A = Positions[TRI[i,1],:];                                                                                                      # 1st Node of the Connection
-    B = Positions[TRI[i,2],:];                                                                                                      # 2nd Node of the Connection
+    B111 = Positions[TRI[i,2],:];                                                                                                      # 2nd Node of the Connection
     C = Positions[TRI[i,3],:];                                                                                                      # 2nd Node of the Connection
     D = Positions[TRI[i,4],:];    
-    b_1 = A-B; # Coordinates of P1 in the Reference System for the Current Point
+    b_1 = A-B111; # Coordinates of P1 in the Reference System for the Current Point
     c_1 = A-C; # Coordinates of P2 in the Reference System for the Current Point
     d_1 = A-D; # Coordinates of P3 in the Reference System for the Current Point
     V[i] = abs(dot(b_1,cross(c_1,d_1)))/6; # mass of the Tetrahedron

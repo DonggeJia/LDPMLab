@@ -10,12 +10,12 @@
     #mean_d_z = Geometry_parameters[10,1]; 
     #support_start= Geometry_parameters[12]
     #support_end  = width-Geometry_parameters[12]       
-    Boun = zeros(Int64, gdl);
+    Boun = zeros(gdl);
     Boun1 = zeros(Int64, gdl);
     #Point_loading=Geometry_parameters[13,1];
     #fixed_region = [[[0 10;0 200;65 70],[3,4,5]],[[100 110;0 200;65 70],[3,4,5]],[[190 200;0 200;65 70],[3,4,5]]]
     for region in fixed_region
-        fixed_points = intersect(findall(region[1][1,1] .< Positions[:,1] .< region[1][1,2]), findall(region[1][2,1] .< Positions[:,2] .< region[1][2,2]), findall(region[1][3,1] .< Positions[:,3] .< region[1][3,2]));
+        fixed_points = intersect(findall(region[1][1,1] .<= Positions[:,1] .<= region[1][1,2]), findall(region[1][2,1] .<= Positions[:,2] .<= region[1][2,2]), findall(region[1][3,1] .<= Positions[:,3] .<= region[1][3,2]));
         for fixed_point in fixed_points # Nodes at the Bottom left are Restrained in UX, UY UZ, and UR1
             for index in region[2]
                 Boun[gdl_n*(fixed_point-1)+index] = 0.0; ## bottom left nodes are restrained at x y, z, and ROTX direction
@@ -28,7 +28,8 @@
     #loaded_region = [[[0 10;0 200;65 70],[3,4,5]],[[100 110;0 200;65 70],[3,4,5]],[[190 200;0 200;65 70],[3,4,5]]]
     
     for region in loaded_region
-        loaded_points = intersect(findall(region[1][1,1] .< Positions[:,1] .< region[1][1,2]), findall(region[1][2,1] .< Positions[:,2] .< region[1][2,2]), findall(region[1][3,1] .< Positions[:,3] .< region[1][3,2]));
+        loaded_points = intersect(findall(region[1][1,1] .<= Positions[:,1] .<= region[1][1,2]), findall(region[1][2,1] .<= Positions[:,2] .<= region[1][2,2]), findall(region[1][3,1] .<= Positions[:,3] .<= region[1][3,2]));
+        println(loaded_points)
         for loaded_point in loaded_points # Nodes at the Bottom left are Restrained in UX, UY UZ, and UR1
             for i in eachindex(region[2])
                 Boun[gdl_n*(loaded_point-1)+region[2][i]] = region[3][i]; ## bottom left nodes are restrained at x y, z, and ROTX direction
@@ -57,9 +58,9 @@
     #bottom_all= findall(Positions[:,3] .== 0 ); # Bottom Nodes of the Cube
     
     # for i in bottom_all
-    #     if support_start-mean_d_x .<= Positions[i,1].<= support_start+mean_d_x
+    #     if support_start-mean_d_x .<== Positions[i,1].<== support_start+mean_d_x
     #         append!(bottom_left,i)
-    #     elseif support_end-mean_d_x .<= Positions[i,1].<= support_end+mean_d_x
+    #     elseif support_end-mean_d_x .<== Positions[i,1].<== support_end+mean_d_x
     #         append!(bottom_right,i)
     #     end
     # end

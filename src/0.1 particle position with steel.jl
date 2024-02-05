@@ -1,4 +1,4 @@
-
+function particle_distribution(particledia)
 particledia = sort(particledia, rev=true)
 L1 = dimen1 #mm
 L2 = dimen2 #mm
@@ -534,6 +534,7 @@ end
 # random points in 6 surfaces 
 #in surface xy
 for i in 1:100000
+    point = [L1 * rand(), L2 * rand(), 0]
     boxnumx = Int64(round(point[1] / Li + 0.5))
     boxnumy = Int64(round(point[2] / Li + 0.5))
     if boxnumx == 1
@@ -588,7 +589,7 @@ for i in 1:100000
 
 end
 for i in 1:100000
-
+    point = [L1 * rand(), L2 * rand(), L3]
     boxnumx = Int64(round(point[1] / Li + 0.5))
     boxnumy = Int64(round(point[2] / Li + 0.5))
     if boxnumx == 1
@@ -644,11 +645,11 @@ for i in 1:100000
 end
 # random points in surfaces yz
 for i in 1:100000
-    @label before_point_generation
+    @label before_point_generation1
     point = [0, L2 * rand(), L3 * rand()]
     for opop in traverse_distribution
         if (point[2] - opop)^2 + (point[3] - height_S)^2 < diameter_S^2 / 4
-            @goto before_point_generation
+            @goto before_point_generation1
         end
     end
     boxnumy = Int64(round(point[2] / Li + 0.5))
@@ -705,11 +706,11 @@ for i in 1:100000
 
 end
 for i in 1:100000
-    @label before_point_generation
+    @label before_point_generation2
     point = [L1, L2 * rand(), L3 * rand()]
     for opop in traverse_distribution
         if (point[2] - opop)^2 + (point[3] - height_S)^2 < diameter_S^2 / 4
-            @goto before_point_generation
+            @goto before_point_generation2
         end
     end
     boxnumy = Int64(round(point[2] / Li + 0.5))
@@ -882,11 +883,11 @@ end
 #point in cubic
 gdg = 0
 while gdg < length(particledia)
-    @label before_point_generation
+    @label before_point_generation3
     point = [L1 * rand(), L2 * rand(), L3 * rand()]
     for opop in traverse_distribution
         if (point[2] - opop)^2 + (point[3] - height_S)^2 < diameter_S^2 / 4
-            @goto before_point_generation
+            @goto before_point_generation3
         end
     end
     boxnumx = Int64(round(point[1] / Li + 0.5))
@@ -991,6 +992,10 @@ for klk = 1:length(pointsfinal)
     end
 end
 
+return pointsresult, pointsdiameterfinal
+end
+
+pointsresult, pointsdiameterfinal = particle_distribution(particledia)
 #using JLD2
 #@save "geometry for concrete with steel_for show steel elements2.jld2" pointsresult pointsdiameterfinal
 #Length(pointsfinal)
