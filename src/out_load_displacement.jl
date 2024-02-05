@@ -41,8 +41,8 @@ Force_disp_collect_dis = [mean(displace_12[:, i]) for i in axes(displace_12, 2)]
 Force_disp_collect = hcat(Force_disp_collect_dis, Force_disp_collect_load)
 CSV.write(string(load_dis_out_name, "load_dis.csv"), Tables.table(Force_disp_collect), writeheader=false)
 
-
-
+lll = plot(scatter(x=Force_disp_collect_dis, y=Force_disp_collect_load, mode="lines"))
+display(lll)
 
 loading_dis_mark = output_direction_load + output_direction_dis
 

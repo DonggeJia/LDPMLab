@@ -80,7 +80,7 @@ function Element_Response_steel(eps_n,eps_t,eps_,E,sigma_N,sigma_T,sigma_eff,eps
             ####nonlinear behavior, return sigma_eff, sigma_N, sigma_T, eps_ 
             
             sigma_N[2] = eps_n[2]*2*E[1]
-            sigma_T[2] = Constitutive_Law_bond(eps_n[2]*leng_th)
+            sigma_T[2] = Constitutive_Law_bond(eps_t[2]*leng_th)
             
             if eps_t[2] != 0 # Avoids Division by 0
                 sigma_l = sigma_T[2]*eps_l/eps_t[2]; # m-component of the calculated stress (Principle of Virtual Power)
