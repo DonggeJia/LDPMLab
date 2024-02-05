@@ -4,6 +4,30 @@
 [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://DonggeJia.github.io/LDPMLab.jl/dev/)
 [![Coverage](https://codecov.io/gh/DonggeJia/LDPMLab.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/DonggeJia/LDPMLab.jl)
 
+LDPMLab, is a integral, open-source and high-performance Julia package for the state of the art of Lattice discrete particle model (LDPM), first inovated by Prof Cusatis of Northwestern in 2011. This software tracks the cutting-edge advance of LDPM, incorparating its variants in simulating mechanical and frature behaviors of particle-reinforced materials with or without bar reinforcements, and mass transportation in heterogenious materials. The application can also be extended to homogeneous material when particle is no longer realistically existed, becoming a computationally more efficient sustitute for FEM.
+
+This package is developed under the supervision of Prof. Fascetti and Prof. Brigham in University of Pittsburgh. 
+
+# Universal applications
+- Specially for:
+-- Realistic meso-scale simulation of mechanical failure of particle-reinforced materials, such as concrete, shale, masonry, cementicious composites, granular rocks, polymers, etc.
+-- Meso-scale mass transport simulation in damaged or non-damaged particle-reinforced materials
+-- Interective multiphysics simulation of particle-reinforced materials with bar reinforcement
+-- Both static and dynamic loading conditions and transport boundaries are applicable
+-- Advanced customizable nonlinear meso-scale constitutive laws for element-wise mechanical response and mass transportation
+- More efficient sustitute for FEM in simulating non-soft materials: 
+-- Setting particle zero radius for homogeneous material simulation
+-- Customizing local meshing for heterogeous materials other than the particle-reinforced 
+
+# Features
+- Easy to use. Get started with the latest documentation at [peripy.readthedocs.org](https://peripy.readthedocs.org)
+- Both static and dynamic solution strategies are incorporated. Generally, the dynamic solution is recommended for its guaranteed convergence. Static solution is more accurate for quasi-satitic performance, but may have difficulty in convergence for models with complicated constitutive laws or meshing 
+- Strict implimentation of random particle distribution and distance check between adjacent particles
+- Output files can be viewed in [Paraview](https://www.paraview.org/)
+- 
+
+# Get started
+- 
 ```
 #!use of package, units: mm, N, Mpa
 #dimen1, dimen2, dimen3, c, w_over_c, da, d0, nF, Rhoc, Rhow, vair, magnifyp
