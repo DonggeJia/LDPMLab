@@ -109,6 +109,8 @@ function particle_distribution(model_name, particle_save="Yes", particle_dirc_an
 end
 
 global filename = "0"
+global steel_uniques = []
+global steel_bond_uniques = []
 function Meshing(model_name, mesh_plot="Yes", mesh_dirc_and_name="LDPM_mesh_facets")
 
     if typeof(model_name) == ldpm
@@ -130,7 +132,7 @@ function Meshing(model_name, mesh_plot="Yes", mesh_dirc_and_name="LDPM_mesh_face
             include("4.6 Steel plot.jl")
         end
     end
-    return steel_uniques, steel_bond_uniques, gdl, Positions, gdl_n, Connect, TRI, Unique_Connections, Elements, Tet, Unique_Connections_Elements, B
+    return gdl, Positions, gdl_n, Connect, TRI, Unique_Connections, Elements, Tet, Unique_Connections_Elements, B
 end
 
 
@@ -162,8 +164,8 @@ The enclosure is not rigorous, meaning that the real eigenvalue problems solved 
 utilize normal floating point computations.
 
 ### Examples
-
 ```jldoctest
+
 julia> A = [0 -1 -1; 2 -1.399.. -0.001 0; 1 0.5 -1]
 3×3 Matrix{Interval{Float64}}:
  [0, 0]  [-1, -1]                       [-1, -1]
@@ -177,19 +179,19 @@ julia> eigenbox(A, Hertz())
 [-1.64732, 0.520456] + [-2.1112, 2.1112]im
 ```
 """
-global fixed_region=[]
-global loaded_region=[]
-global plot_boundary="0"
-function Boundary_setting(fixed__region=[[[0 10; 0 200; 0 10], [1, 2, 3, 4, 5, 6]], [[190 200; 0 200; 0 10], [1, 2, 3]]], loaded__region=[[[95 105; 0 200; 65 70], [1,2,3,4,5,6], [0,0,-0.2,0,0,0]]], plot__boundary="Yes")
-    global fixed_region=fixed__region
-    global loaded_region=loaded__region
-    global plot_boundary=plot__boundary
+global loaded_region = []
+global plot_boundary = "0"
+function Boundary_setting(loaded__region=[[[0 10; 0 200; 0 10], [1, 2, 3, 4, 5, 6], [0, 0, 0, 0, 0, 0]], [[190 200; 0 200; 0 10], [1, 2, 3], [0, 0, 0]], [[95 105; 0 200; 60 70], [3], [-0.2]]], plot__boundary="Yes")
+    global loaded_region = loaded__region
+    global plot_boundary = plot__boundary
     include("5_Boundary.jl")
     return Boun, Boun1
 end
-
-function Solutions(model_name, scale_delata_time=1.0, t_final=0.8) #loading [velocity, direction], Δt= round(2/median(ω_n),digits=5)
-    Δt = Δt * scale_delata_time
+global Δt = 0.000001
+global t_final = 0.2
+function Solutions(model_name, scale_delata_time=1.0, t_final_=0.8) #loading [velocity, direction], Δt= round(2/median(ω_n),digits=5)
+    global Δt = Δt * scale_delata_time
+    global t_final = t_final_
     if typeof(model_name) == ldpm
         include("6_Material_Properties.jl") # Calculate Stable Time Step
         include("11_Boundary_Conditions.jl") # Function to Calculate Boundary Velocities
@@ -211,8 +213,21 @@ function Solutions(model_name, scale_delata_time=1.0, t_final=0.8) #loading [vel
     end
     return displace, eps_, eps_n, eps_t, sigma_eff, sigma_N, sigma_T, internal, external
 end
-
-function post_process(model_name, relative_time_of_cracking=[0.2, 0.4, 0.5], crack_plot_dirc_and_name="cracking pattern", output_displacement_directions=[[[0 10; 0 200; 65 70], [3, 4, 5]], [[100 110; 0 200; 65 70], [3, 4, 5]], [[190 200; 0 200; 65 70], [3, 4, 5]]], output_load_directions=[[[0 10; 0 200; 65 70], [3, 4, 5]], [[100 110; 0 200; 65 70], [3, 4, 5]], [[190 200; 0 200; 65 70], [3, 4, 5]]], step_interval=300, load_dis_out_name="200*200*70 deck", plot_dis_load_region="Yes")
+global relative_time_of_cracking = []
+global crack_plot_dirc_and_name = "0"
+global output_displacement_directions = []
+global output_load_directions = []
+global step_interval = 1
+global load_dis_out_name = "0"
+global plot_dis_load_region = "Yes"
+function post_process(model_name, relative_time_of_cracking_=[0.4, 0.8, 1.0], crack_plot_dirc_and_name_="D:/cracking pattern", output_displacement_directions_=[[[90 110; 0 200; 0 10], [3]]], output_load_directions_=[[[90 110; 0 200; 60 70], [3]]], step_interval_=300, load_dis_out_name_="200*200*70 deck", plot_dis_load_region_="Yes")
+    global relative_time_of_cracking = relative_time_of_cracking_
+    global crack_plot_dirc_and_name = crack_plot_dirc_and_name_
+    global output_displacement_directions = output_displacement_directions_
+    global output_load_directions = output_load_directions_
+    global step_interval = step_interval_
+    global load_dis_out_name = load_dis_out_name_
+    global plot_dis_load_region = plot_dis_load_region_
     if typeof(model_name) == ldpm
         include("vtk_cracks_ non_projected.jl") # Calculate Stable Time Step
 
@@ -234,10 +249,10 @@ LDPM_bar_reforced.geometry_parameters = [200, 200, 70, 190 * 10^-9, 0.9, 15, 10,
 #traverse_distribution 
 LDPM_bar_reforced.steel_layout = [50, 100, 150]
 
-particle_distribution(LDPM_bar_reforced, "Yes", "D:/LDPM_geometry")
+particle_distribution(LDPM, "Yes", "D:/LDPM_geometry")
 @load "D:/LDPM_geometry.jld2"
-Meshing(LDPM_bar_reforced, "Yes", "D:/LDPM_mesh_facets")
-Boundary_setting([[[0 10; 0 200; 0 10], [1, 2, 3, 4, 5, 6]], [[190 200; 0 200; 0 10], [1, 2, 3]]], [[[95 105; 0 200; 60 70], [1,2,3,4,5,6], [0,0,-0.2,0,0,0]]], "Yes")
+Meshing(LDPM, "Yes", "D:/LDPM_mesh_facets")
+Boundary_setting([[[0 10; 0 200; 0 10], [1, 2, 3, 4, 5, 6], [0, 0, 0, 0, 0, 0]], [[190 200; 0 200; 0 10], [1, 2, 3], [0, 0, 0]], [[95 105; 0 200; 60 70], [3], [-0.2]]], "Yes")
 
 45000.0 # E_m -> Initial Elastic Modulus for the Matrix [MPa]
 45000.0 # E_a -> Initial Elastic Modulus for the Aggregates [MPa]
@@ -263,5 +278,5 @@ LDPM.mechanical_parameters = [45000.0, 45000.0, 3.0, -50.0, 10.0, 0.07, 0.35, 0.
 #Esh = 833.33 #Mpa
 LDPM_bar_reforced.mechanical_parameters = [45000.0, 45000.0, 3.0, -50.0, 10.0, 0.07, 0.35, 0.25, 2.0, 0.8, 2.5e-6, 1.0, 5.0, 11250.0, 0.0, 1.96 * 10^5, 500, 650, 0.02, 833.33]
 
-Solutions(model_name, scale_delata_time=1.0, t_final=0.05) #loading [velocity, direction], Δt= round(2/median(ω_n),digits=5)
-post_process(model_name, relative_time_of_cracking=[0.2, 0.4, 0.5], crack_plot_dirc_and_name="cracking pattern", output_displacement_directions=[[[0 10; 0 200; 65 70], [3, 4, 5]], [[100 110; 0 200; 65 70], [3, 4, 5]], [[190 200; 0 200; 65 70], [3, 4, 5]]], output_load_directions=[[[0 10; 0 200; 65 70], [3, 4, 5]], [[100 110; 0 200; 65 70], [3, 4, 5]], [[190 200; 0 200; 65 70], [3, 4, 5]]], step_interval=300, load_dis_out_name="200*200*70 deck", plot_dis_load_region="Yes")
+Solutions(LDPM, 1.0, 0.2) #loading [velocity, direction], Δt= round(2/median(ω_n),digits=5)
+post_process(LDPM, [0.4, 0.8, 1.0], "D:/cracking pattern", [[[90 110; 0 200; 0 10], [3]]], [[[90 110; 0 200; 60 70], [3]]], 300, "200_200_70 deck", "Yes")

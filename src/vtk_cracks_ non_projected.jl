@@ -49,7 +49,7 @@ function vtk_cracks(sigma_n, sigma_t, epsilon_n, epsilon_t, E, α, Unique_Connec
     for mm = 1:size(steps,1)
         ii = steps[mm]
 
-        file = string("vtk_files\\",filename,"_", ii, ".vtk")
+        file = string(filename,"_", ii, ".vtk")
         open(file, "w") do f
             write(f, "# vtk DataFile Version 4.0 \n")
             write(f, "Unstructured grid legacy vtk file with point scalar data \n")
@@ -108,5 +108,5 @@ len=[Connect[i].Length for i in axes(Connect,1)]
 
 n_inc = size(displace,2)-1
 steps = [Int(round(relative_time_of_cracking[1]*n_inc)),Int(round(relative_time_of_cracking[2]*n_inc)),Int(round(relative_time_of_cracking[3]*n_inc))]
-cell_types,w=vtk_cracks(sigma_N, sigma_T, eps_n, eps_t, E, α, Unique_Connections_Triangles,len, displace, steps, crack_plot_dirc_and_name)
+cell_types,w=vtk_cracks(sigma_N, sigma_T, eps_n, eps_t, E, alpha, Unique_Connections_Triangles,len, displace, steps, crack_plot_dirc_and_name)
 

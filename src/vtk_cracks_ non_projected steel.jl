@@ -77,7 +77,7 @@ function vtk_cracks(sigma_n, sigma_t, epsilon_n, epsilon_t, E, α, Unique_Connec
     for mm = 1:size(steps,1)
         ii = steps[mm]
 
-        file = string("vtk_files\\",filename,"_", ii, ".vtk")
+        file = string(filename,"_", ii, ".vtk")
         open(file, "w") do f
             write(f, "# vtk DataFile Version 4.0 \n")
             write(f, "Unstructured grid legacy vtk file with point scalar data \n")

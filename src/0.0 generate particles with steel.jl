@@ -59,8 +59,8 @@ function particle_generation()
     # PlotlyJS.add_trace!(ll, scatter(x=diameter, y=FF, mode="markers"))#u-----
     # display(ll) 
     #u----savefig(ll, "particle generation.svg")#u------
-    return particledia
+    return particledia, FF
 end
 diameter = d0:0.1:da
-FF = Array{Float64}(undef, length(diameter))
-particledia = particle_generation()
+#FF = Array{Float64}(undef, length(diameter))
+particledia, FF = particle_generation()
