@@ -38,10 +38,11 @@ mutable struct ldpmbarr
     #Area::Vector{Float64}                                                       # Area of each triangle (collated in a vector)
 end
 LDPM_bar_reforced = ldpmbarr([0, 0.0], [0, 0.0], [0, 0.0])
-
-LDPM.geometry_parameters = [200, 200, 70, 190 * 10^-9, 0.9, 15, 10, 0.45, 3150 * 10^-9, 1000 * 10^-9, 3.5 / 100, 1.1]
-#dimen1, dimen2, dimen3, c, w_over_c, da, d0, nF, Rhoc, Rhow, vair, magnifyp, height_S, diameter_S
-LDPM_bar_reforced.geometry_parameters = [200, 200, 70, 190 * 10^-9, 0.9, 15, 10, 0.45, 3150 * 10^-9, 1000 * 10^-9, 3.5 / 100, 1.1, 20.0, 16.0]
+# 4,5,9,10,11 are deleted
+#then va>4 6>5 7>6 8>7 12>8 13>9 14>10 
+LDPM.geometry_parameters = [200, 200, 70, 0.734, 15, 10, 0.45, 1.1]
+#dimen1, dimen2, dimen3, da, d0, nF, magnifyp, height_S, diameter_S
+LDPM_bar_reforced.geometry_parameters = [200, 200, 70, 0.734, 15, 10, 0.45, 1.1, 20.0, 16.0]
 #traverse_distribution 
 LDPM_bar_reforced.steel_layout = [50, 100, 150]
 
@@ -242,10 +243,10 @@ export particle_distribution, Meshing, Boundary_setting, Solutions, post_process
 end
 
 #!use of package, units: mm, N, Mpa
-#dimen1, dimen2, dimen3, c, w_over_c, da, d0, nF, Rhoc, Rhow, vair, magnifyp
-# LDPM.geometry_parameters = [200, 200, 70, 190 * 10^-9, 0.9, 15, 10, 0.45, 3150 * 10^-9, 1000 * 10^-9, 3.5 / 100, 1.1]
-# #dimen1, dimen2, dimen3, c, w_over_c, da, d0, nF, Rhoc, Rhow, vair, magnifyp, height_S, diameter_S
-# LDPM_bar_reforced.geometry_parameters = [200, 200, 70, 190 * 10^-9, 0.9, 15, 10, 0.45, 3150 * 10^-9, 1000 * 10^-9, 3.5 / 100, 1.1, 20.0, 16.0]
+# imen1, dimen2, dimen3, va, da, d0, nF, magnifyp
+# LDPM.geometry_parameters = [200, 200, 70, 0.734, 15, 10, 0.45, 1.1]
+# dimen1, dimen2, dimen3, va, da, d0, nF, magnifyp, height_S, diameter_S
+# LDPM_bar_reforced.geometry_parameters = [200, 200, 70, 0.734, 15, 10, 0.45, 1.1, 20.0, 16.0]
 # #traverse_distribution 
 # LDPM_bar_reforced.steel_layout = [50, 100, 150]
 
