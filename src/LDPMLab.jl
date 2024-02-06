@@ -138,6 +138,8 @@ function Meshing(model_name, mesh_plot="Yes", mesh_dirc_and_name="LDPM_mesh_face
     return gdl, Positions, gdl_n, Connect, TRI, Unique_Connections, Elements, Tet, Unique_Connections_Elements, B
 end
 
+global loaded_region = []
+global plot_boundary = "0"
 
 """
 eigenbox(A[, method=Rohn()])
@@ -161,8 +163,6 @@ output is a real interval, otherwise it is a complex interval.
 
 
 """
-global loaded_region = []
-global plot_boundary = "0"
 function Boundary_setting(loaded__region=[[[0 10; 0 200; 0 10], [1, 2, 3, 4, 5, 6], [0, 0, 0, 0, 0, 0]], [[190 200; 0 200; 0 10], [1, 2, 3], [0, 0, 0]], [[95 105; 0 200; 60 70], [3], [-0.2]]], plot__boundary="Yes")
     global loaded_region = loaded__region
     global plot_boundary = plot__boundary
