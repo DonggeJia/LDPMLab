@@ -46,7 +46,7 @@ and you are ready to go.
 ## Workflow for application
 ### 1. Speficiy geometrical parameters for a LDPM model
 - for particle reinforced material:
-    - Enter the values of material size in x, y, z dimensions (mm), cement content (kg/$mm^3$), aggregate volume fraction(-), maximum particle size (mm), minimum particle size (mm), material parameter (-) for particle distribution that 0.5 corresponds to the classical Fuller curve, and scaling factor for minimum distance check in particle distribution that 1.0 means particle centroids must have a distance larger than 1.0*(radius of the first particle + radius of the second particle)
+    - Enter the values of material size in x, y, z dimensions (mm), cement content (kg/mm^3), aggregate volume fraction(-), maximum particle size (mm), minimum particle size (mm), material parameter (-) for particle distribution that 0.5 corresponds to the classical Fuller curve, and scaling factor for minimum distance check in particle distribution that 1.0 means particle centroids must have a distance larger than 1.0*(radius of the first particle + radius of the second particle)
     ```
     LDPM.geometry_parameters = [200, 200, 70, 0.734, 15, 10, 0.45, 1.1]
     ```
@@ -144,7 +144,7 @@ Post process uses a function `post_process(model_name, relative_time_of_cracking
 
 `model_name` should be `LDPM` for particle reinforced materials and `LDPM_bar_reforced` for particle reinforced materials with reforcing bars.
 
-This function enables you output cracking data as vtk files at different time steps during the solution by `relative_time_of_cracking_`. By default, the cracking pattern plots will be generated at the time steps around `0.4 \time total time` , `0.8 $\times$ total time`, and `1.0 $\times$ total time`. 
+This function enables you output cracking data as vtk files at different time steps during the solution by `relative_time_of_cracking_`. By default, the cracking pattern plots will be generated at the time steps around `0.4` $\times$ `total time` , `0.8` $\times$ `total time`, and `1.0` $\times$ `total time`. 
 
 `crack_plot_dirc_and_name_` indicates the filefolder and filename for the cacking plot storage.
 
