@@ -46,7 +46,7 @@ and you are ready to go.
 ## Workflow for application
 ### 1. Speficiy geometrical parameters for a LDPM model
 - for particle reinforced material:
-    - Enter the values of material size in x, y, z dimensions (mm), cement content (kg/mm^3), aggregate volume fraction(-), maximum particle size (mm), minimum particle size (mm), material parameter (-) for particle distribution that 0.5 corresponds to the classical Fuller curve, and scaling factor for minimum distance check in particle distribution that 1.0 means particle centroids must have a distance larger than 1.0*(radius of the first particle + radius of the second particle)
+    - Enter the values of material size in x, y, z dimensions (mm), cement content (kg/mm<sup>3</sup>), aggregate volume fraction(-), maximum particle size (mm), minimum particle size (mm), material parameter (-) for particle distribution that 0.5 corresponds to the classical Fuller curve, and scaling factor for minimum distance check in particle distribution that 1.0 means particle centroids must have a distance larger than 1.0*(radius of the first particle + radius of the second particle)
     ```
     LDPM.geometry_parameters = [200, 200, 70, 0.734, 15, 10, 0.45, 1.1]
     ```
@@ -88,7 +88,7 @@ This step implements the meshing process using Delauney tetrahedralization and m
     "D:/LDPM_mesh_facets" indicates the filefolder and filename for storage.
 - for particle reinforced material with reforcing bars
     ```
-    Meshing(LDPM_bar_reforced, "Yes", "D:/  LDPM_mesh_facets")
+    Meshing(LDPM_bar_reforced, "Yes", "D:/LDPM_mesh_facets")
     ```
 ### 4. Set a boundary condition
     
@@ -111,7 +111,7 @@ The boundary condictions are marked on each point with a format `local freedom d
 
 ### 5. Specify mechanical parameters for a LDPM model
 - for particle reinforced material
-    - Enter the values of initial elastic modulus for the matrix which wraps around the particles (MPa), initial elastic modulus for particles (MPa), tension stress limit (MPa), compression stress limit (MPa), shear stress limit (MPa), Mode I fracture energy (N/mm), Mode II fracture energy (N/mm), tangential-to-normal stiffness ratio (controls poission's efffect) (-), exponent that controls transition of softening parameter (-), exponent that controls transition of hardening parameter (-), material's mass density (ton/$mm^3$), frist volumetric compression parameter (-), second volumetric compression parameter (-), parameter that governs the post-Peak behavior in compression (-), and damping coefficient in dynamic solution (-).
+    - Enter the values of initial elastic modulus for the matrix which wraps around the particles (MPa), initial elastic modulus for particles (MPa), tension stress limit (MPa), compression stress limit (MPa), shear stress limit (MPa), Mode I fracture energy (N/mm), Mode II fracture energy (N/mm), tangential-to-normal stiffness ratio (controls poission's efffect) (-), exponent that controls transition of softening parameter (-), exponent that controls transition of hardening parameter (-), material's mass density (ton/mm<sup>3</sup>), frist volumetric compression parameter (-), second volumetric compression parameter (-), parameter that governs the post-Peak behavior in compression (-), and damping coefficient in dynamic solution (-).
     ```
     LDPM.mechanical_parameters = [45000.0, 45000.0, 3.0, -50.0, 10.0, 0.07, 0.35, 0.25, 2.0, 0.8, 2.5e-6, 1.0, 5.0, 11250.0, 0.0]
     ```
