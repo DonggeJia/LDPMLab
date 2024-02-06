@@ -1,8 +1,8 @@
 # LDPMLab
 
-[![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://DonggeJia.github.io/LDPMLab.jl/stable/)
-[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://DonggeJia.github.io/LDPMLab.jl/dev/)
-[![Coverage](https://codecov.io/gh/DonggeJia/LDPMLab.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/DonggeJia/LDPMLab.jl)
+[![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://donggejia.github.io/LDPMLab.jl/stable/)
+[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://donggejia.github.io/LDPMLab.jl/dev/)
+[![Coverage](https://codecov.io/gh/DonggeJia/LDPMLab.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/donggejia/LDPMLab.jl)
 
 - LDPMLab, is a integral, open-source and high-performance Julia package for the state of the art of Lattice discrete particle model (LDPM), first inovated by Prof. Cusatis of Northwestern in 2011. 
 
