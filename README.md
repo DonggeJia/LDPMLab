@@ -46,7 +46,7 @@ and you are ready to go.
 ## Workflow for application
 ### 1. Speficiy geometrical parameters for a LDPM model
 - for particle reinforced material:
-    - Enter the values of material size in x, y, z dimensions (mm), cement content (kg/mm^3), aggregate volume fraction(-), maximum particle size (mm), minimum particle size (mm), material parameter (-) for particle distribution that 0.5 corresponds to the classical Fuller curve, and scaling factor for minimum distance check in particle distribution that 1.0 means particle centroids must have a distance larger than 1.0*(radius of the first particle + radius of the second particle)
+    - Enter the values of material size in x, y, z dimensions (mm), cement content (kg/$mm^3$), aggregate volume fraction(-), maximum particle size (mm), minimum particle size (mm), material parameter (-) for particle distribution that 0.5 corresponds to the classical Fuller curve, and scaling factor for minimum distance check in particle distribution that 1.0 means particle centroids must have a distance larger than 1.0*(radius of the first particle + radius of the second particle)
     ```
     LDPM.geometry_parameters = [200, 200, 70, 0.734, 15, 10, 0.45, 1.1]
     ```
@@ -108,9 +108,10 @@ Boundary_setting([[[0 10; 0 200; 0 10], [1, 2, 3, 4, 5, 6], [0, 0, 0, 0, 0, 0]],
     <img src="docs/src/boundary setting.png" width="450"/>
 </p>
 The boundary condictions are marked on each point with a format `local freedom degree_velocity`. Each point will have at most 6 marks for freedom degrees in x-direction movement, y-direction movement, z-direction movement, rotation about the x-axis, rotation about the y-axis, rotation about the z-axis.
+
 ### 5. Specify mechanical parameters for a LDPM model
 - for particle reinforced material
-    - Enter the values of initial elastic modulus for the matrix which wraps around the particles (MPa), initial elastic modulus for particles (MPa), tension stress limit (MPa), compression stress limit (MPa), shear stress limit (MPa), Mode I fracture energy (N/mm), Mode II fracture energy (N/mm), tangential-to-normal stiffness ratio (controls poission's efffect) (-), exponent that controls transition of softening parameter (-), exponent that controls transition of hardening parameter (-), material's mass density (ton/mm$^3$), frist volumetric compression parameter (-), second volumetric compression parameter (-), parameter that governs the post-Peak behavior in compression (-), and damping coefficient in dynamic solution (-).
+    - Enter the values of initial elastic modulus for the matrix which wraps around the particles (MPa), initial elastic modulus for particles (MPa), tension stress limit (MPa), compression stress limit (MPa), shear stress limit (MPa), Mode I fracture energy (N/mm), Mode II fracture energy (N/mm), tangential-to-normal stiffness ratio (controls poission's efffect) (-), exponent that controls transition of softening parameter (-), exponent that controls transition of hardening parameter (-), material's mass density (ton/$mm^3$), frist volumetric compression parameter (-), second volumetric compression parameter (-), parameter that governs the post-Peak behavior in compression (-), and damping coefficient in dynamic solution (-).
     ```
     LDPM.mechanical_parameters = [45000.0, 45000.0, 3.0, -50.0, 10.0, 0.07, 0.35, 0.25, 2.0, 0.8, 2.5e-6, 1.0, 5.0, 11250.0, 0.0]
     ```
@@ -143,7 +144,7 @@ Post process uses a function `post_process(model_name, relative_time_of_cracking
 
 `model_name` should be `LDPM` for particle reinforced materials and `LDPM_bar_reforced` for particle reinforced materials with reforcing bars.
 
-This function enables you output cracking data as vtk files at different time steps during the solution by `relative_time_of_cracking_`. By default, the cracking pattern plots will be generated at the time steps around `0.4 \time total time` , `0.8 \time total time`, and `1.0 \time total time`. 
+This function enables you output cracking data as vtk files at different time steps during the solution by `relative_time_of_cracking_`. By default, the cracking pattern plots will be generated at the time steps around `0.4 \time total time` , `0.8 $\times$ total time`, and `1.0 $\times$ total time`. 
 
 `crack_plot_dirc_and_name_` indicates the filefolder and filename for the cacking plot storage.
 
@@ -162,5 +163,7 @@ Notice that for the stability of dynamical solution, the first 500 time steps in
 `load_dis_out_name_` indicates the filefolder and filename for the displacement and load data storage.
 ## References
 Excellent introductions of LDPM are:
+
 Cusatis, G., Pelessone, D., & Mencarelli, A. (2011). Lattice discrete particle model (LDPM) for failure behavior of concrete. I: Theory. Cement and Concrete Composites, 33(9), 881-890.
+
 Fascetti, A., Bolander, J. E., & Nisticó, N. (2018). Lattice discrete particle modeling of concrete under compressive loading: Multiscale experimental approach for parameter determination. Journal of Engineering Mechanics, 144(8), 04018058.
