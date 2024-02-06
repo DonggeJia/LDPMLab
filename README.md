@@ -92,9 +92,12 @@ Setting boundaries requires runing a function:
 ```
 Boundary_setting([[[0 10; 0 200; 0 10], [1, 2, 3, 4, 5, 6], [0, 0, 0, 0, 0, 0]], [[190 200; 0 200; 0 10], [1, 2, 3], [0, 0, 0]], [[95 105; 0 200; 60 70], [3], [-0.2]]], "Yes")
 ```
-`loaded_region` is a 
-
-
+`loaded_region` is a varible receiving the information of displacement-controlled boundaries. The expected input is a three-layer nested vector. The first layer is `[the first boundary, the second boundary, ..., the last boundary]`. Each boundary is a vector `[Boundary condition region, freedom indexes that boundary applied on boundary nodes, displacement velocities on these boundary freedom indexes]`. `Boundary condition region` is a $3 \times 2$ matrix where the first row indicates the boundary region in x-coordinate that `Boundary condition region[1,1]` is the starting boundary and `Boundary condition region[1,2]` is the ending boundary, the second row indicates the boundary region in y-coordinate,
+and the third row indicates the boundary region in z-coordinate.
+"Yes" means the boundary will be ploted, other values for this parameter means no plot. the plot is like
+<p align="center">
+    <img src="docs/src/boundary setting.png" width="450"/>
+</p>
 
 ```
 # imen1, dimen2, dimen3, va, da, d0, nF, magnifyp
