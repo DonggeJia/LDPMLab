@@ -183,6 +183,8 @@ function Solutions(model_name, scale_delata_time=1.0, t_final_=0.8) #Δt= round(
         include("15_Constitutive_Law.jl") # Constitutive Law
         #include("15_Constitutive_Law steel and bond.jl") # Constitutive Law
         include("Central_Difference_Integration.jl")
+        return displace, eps_, eps_n, eps_t, sigma_eff, sigma_N, sigma_T, internal, external
+
     elseif typeof(model_name) == ldpmbarr
         include("6_Material_Properties with steel.jl") # Calculate Stable Time Step
         include("11_Boundary_Conditions.jl") # Function to Calculate Boundary Velocities
@@ -192,8 +194,9 @@ function Solutions(model_name, scale_delata_time=1.0, t_final_=0.8) #Δt= round(
         include("15_Constitutive_Law.jl") # Constitutive Law
         include("15_Constitutive_Law steel and bond.jl") # Constitutive Law
         include("Central_Difference_Integration_with steel.jl")
+        return gdlS, displace, eps_, eps_n, eps_t, sigma_eff, sigma_N, sigma_T, internal, external
+
     end
-    return displace, eps_, eps_n, eps_t, sigma_eff, sigma_N, sigma_T, internal, external
 end
 global relative_time_of_cracking = []
 global crack_plot_dirc_and_name = "0"
@@ -202,6 +205,8 @@ global output_load_directions = []
 global step_interval = 1
 global load_dis_out_name = "0"
 global plot_dis_load_region = "Yes"
+global gdl = 1
+
 function post_process(model_name, relative_time_of_cracking_=[0.4, 0.8, 1.0], crack_plot_dirc_and_name_="D:/cracking pattern", output_displacement_directions_=[[[90 110; 0 200; 0 10], [3]]], output_load_directions_=[[[90 110; 0 200; 60 70], [3]]], step_interval_=300, load_dis_out_name_="200*200*70 deck", plot_dis_load_region_="Yes")
     global relative_time_of_cracking = relative_time_of_cracking_
     global crack_plot_dirc_and_name = crack_plot_dirc_and_name_
@@ -214,11 +219,11 @@ function post_process(model_name, relative_time_of_cracking_=[0.4, 0.8, 1.0], cr
         include("vtk_cracks_ non_projected.jl") # Calculate Stable Time Step
         include("out_load_displacement.jl")
     elseif typeof(model_name) == ldpmbarr
-        gdl = gdlS
+        global gdl = gdlS
         include("vtk_cracks_ non_projected steel.jl") # Calculate Stable Time Step
         include("out_load_displacement with steel.jl")
     end
-    
+
 end
 
 export Particle_distribution, Meshing, Boundary_setting, Solutions, post_process,
@@ -227,7 +232,7 @@ end
 
 
 #!use of package, units: mm, N, Mpa
-# #imen1, dimen2, dimen3, va, da, d0, nF, magnifyp
+# imen1, dimen2, dimen3, va, da, d0, nF, magnifyp
 # LDPM.geometry_parameters = [200, 200, 70, 0.734, 15, 10, 0.45, 1.1]
 
 # Particle_distribution(LDPM, "Yes", "D:/LDPM_geometry")
@@ -252,7 +257,7 @@ end
 # #0.0 # zeta -> damping coefficient
 # LDPM.mechanical_parameters = [45000.0, 45000.0, 3.0, -50.0, 10.0, 0.07, 0.35, 0.25, 2.0, 0.8, 2.5e-6, 1.0, 5.0, 11250.0, 0.0]
 
-# Solutions(LDPM, 1, 0.3) # Δt= round(2/median(ω_n),digits=5)
+# Solutions(LDPM, 1, 0.8) # Δt= round(2/median(ω_n),digits=5)
 # post_process(LDPM, [0.4, 0.8, 1.0], "D:/cracking pattern", [[[90 110; 0 200; 0 10], [3]]], [[[90 110; 0 200; 60 70], [3]]], 300, "D:/200_200_70 deck", "Yes")
 
 
@@ -273,5 +278,5 @@ end
 # #Esh = 833.33 #Mpa
 # LDPM_bar_reforced.mechanical_parameters = [45000.0, 45000.0, 3.0, -50.0, 10.0, 0.07, 0.35, 0.25, 2.0, 0.8, 2.5e-6, 1.0, 5.0, 11250.0, 0.0, 1.96 * 10^5, 500, 0.02, 833.33]
 
-# Solutions(LDPM_bar_reforced 0.2, 0.3) # Δt= round(2/median(ω_n),digits=5)
+# Solutions(LDPM_bar_reforced, 0.2, 0.3) # Δt= round(2/median(ω_n),digits=5)
 # post_process(LDPM_bar_reforced, [0.4, 0.8, 1.0], "D:/cracking pattern", [[[90 110; 0 200; 0 10], [3]]], [[[90 110; 0 200; 60 70], [3]]], 300, "D:/200_200_70 deck", "Yes")
