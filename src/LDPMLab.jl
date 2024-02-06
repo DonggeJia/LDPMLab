@@ -212,12 +212,13 @@ function post_process(model_name, relative_time_of_cracking_=[0.4, 0.8, 1.0], cr
     global plot_dis_load_region = plot_dis_load_region_
     if typeof(model_name) == ldpm
         include("vtk_cracks_ non_projected.jl") # Calculate Stable Time Step
-
+        include("out_load_displacement.jl")
     elseif typeof(model_name) == ldpmbarr
         gdl = gdlS
         include("vtk_cracks_ non_projected steel.jl") # Calculate Stable Time Step
+        include("out_load_displacement with steel.jl")
     end
-    include("out_load_displacement.jl")
+    
 end
 
 export Particle_distribution, Meshing, Boundary_setting, Solutions, post_process,
@@ -261,4 +262,4 @@ end
 # LDPM_bar_reforced.mechanical_parameters = [45000.0, 45000.0, 3.0, -50.0, 10.0, 0.07, 0.35, 0.25, 2.0, 0.8, 2.5e-6, 1.0, 5.0, 11250.0, 0.0, 1.96 * 10^5, 500, 0.02, 833.33]
 
 # Solutions(LDPM, 0.2, 0.8) #loading [velocity, direction], Δt= round(2/median(ω_n),digits=5)
-# post_process(LDPM, [0.4, 0.8, 1.0], "D:/cracking pattern", [[[90 110; 0 200; 0 10], [3]]], [[[90 110; 0 200; 60 70], [3]]], 300, "200_200_70 deck", "Yes")
+# post_process(LDPM, [0.4, 0.8, 1.0], "D:/cracking pattern", [[[90 110; 0 200; 0 10], [3]]], [[[90 110; 0 200; 60 70], [3]]], 300, "D:/200_200_70 deck", "Yes")
