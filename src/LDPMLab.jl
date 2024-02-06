@@ -26,6 +26,7 @@ mutable struct ldpm
     #Tet::Vector{Int64}                                                          # ID of tetrahedron
     #Area::Vector{Float64}                                                       # Area of each triangle (collated in a vector)
 end
+
 LDPM = ldpm([0, 0.0], [0, 0.0])
 
 mutable struct ldpmbarr
