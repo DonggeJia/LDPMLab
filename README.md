@@ -75,7 +75,7 @@ and you are ready to go.
 A particle gradation curve will be generated after running this function, for example,
 
 <p align="center">
-    <img src="docs/src/particle gradation curve will be generated.png" width="450"/>
+    <img src="docs/src/particle size generation.png" width="450"/>
 </p>
 
 If particle distribution is stored, you can use
@@ -179,8 +179,13 @@ Notice that for the stability of dynamical solution, the first 500 time steps in
 
 The cracking pattern for particle reinforced materials in Paraview is like
 <p align="center">
+    <img src="docs/src/cracking and dis_load output1.png" width="750"/>
+</p>
+
+<p align="center">
     <img src="docs/src/cracking and dis_load output.png" width="750"/>
 </p>
+
 Notice that Paraview has rich functionality in beautifying plots.
 
 ## References

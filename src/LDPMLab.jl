@@ -261,5 +261,5 @@ end
 # #Esh = 833.33 #Mpa
 # LDPM_bar_reforced.mechanical_parameters = [45000.0, 45000.0, 3.0, -50.0, 10.0, 0.07, 0.35, 0.25, 2.0, 0.8, 2.5e-6, 1.0, 5.0, 11250.0, 0.0, 1.96 * 10^5, 500, 0.02, 833.33]
 
-# Solutions(LDPM, 0.2, 0.8) #loading [velocity, direction], Δt= round(2/median(ω_n),digits=5)
+# Solutions(LDPM, 0.2, 0.3) # Δt= round(2/median(ω_n),digits=5)
 # post_process(LDPM, [0.4, 0.8, 1.0], "D:/cracking pattern", [[[90 110; 0 200; 0 10], [3]]], [[[90 110; 0 200; 60 70], [3]]], 300, "D:/200_200_70 deck", "Yes")
