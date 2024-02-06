@@ -44,7 +44,7 @@ using LDPMLab
 and you are ready to go.
 
 ## Workflow for application
-# 1. Speficiy geometrical parameters for a LDPM model
+### 1. Speficiy geometrical parameters for a LDPM model
     - for particle reinforced material:
         - Enter the values of material size in x, y, z dimensions (mm), cement content (kg/mm^3), aggregate volume fraction(-), maximum particle size (mm), minimum particle size (mm), material parameter (-) for particle distribution that 0.5 corresponds to the classical Fuller curve, and scaling factor for minimum distance check in particle distribution that 1.0 means particle centroids must have a distance larger than 1.0*(radius of the first particle + radius of the second particle)
         ```
@@ -60,7 +60,7 @@ and you are ready to go.
         LDPM_bar_reforced.steel_layout = [50, 100, 150]
         ```
         By default, the orientation of reinforcing bars is along the x-coordinate
-# 2. Distribute particles in the material volume
+### 2. Distribute particles in the material volume
     - for particle reinforced material
         ```
         particle_distribution(LDPM, "Yes", "D:/LDPM_geometry")
@@ -77,7 +77,7 @@ and you are ready to go.
     @load "D:/LDPM_geometry.jld2"
     ```
     to reload all the procedures you've done in steps 1 and 2.
-# 3. Meshing
+### 3. Meshing
     This step implements the meshing process using Delauney tetrahedralization and modified Voronoi tesselation.
     - for particle reinforced material
         ```
@@ -90,7 +90,7 @@ and you are ready to go.
         ```
         Meshing(LDPM_bar_reforced, "Yes", "D:/  LDPM_mesh_facets")
         ```
-# 4. Set a boundary condition
+### 4. Set a boundary condition
     
     Setting boundaries requires runing a function:
     `Boundary_setting(loaded__region, plot__boundary)
@@ -108,7 +108,7 @@ and you are ready to go.
         <img src="docs/src/boundary setting.png" width="450"/>
     </p>
     The boundary condictions are marked on each point with a format `local freedom degree_velocity`. Each point will have at most 6 marks for freedom degrees in x-direction movement, y-direction movement, z-direction movement, rotation about the x-axis, rotation about the y-axis, rotation about the z-axis.
-# 5. Specify mechanical parameters for a LDPM model
+### 5. Specify mechanical parameters for a LDPM model
 - for particle reinforced material
     - Enter the values of initial elastic modulus for the matrix which wraps around the particles (MPa), initial elastic modulus for particles (MPa), tension stress limit (MPa), compression stress limit (MPa), shear stress limit (MPa), Mode I fracture energy (N/mm), Mode II fracture energy (N/mm), tangential-to-normal stiffness ratio (controls poission's efffect) (-), exponent that controls transition of softening parameter (-), exponent that controls transition of hardening parameter (-), material's mass density (ton/mm$^3$), frist volumetric compression parameter (-), second volumetric compression parameter (-), parameter that governs the post-Peak behavior in compression (-), and damping coefficient in dynamic solution (-).
     ```
@@ -120,7 +120,7 @@ and you are ready to go.
     LDPM_bar_reforced.mechanical_parameters = [45000.0, 45000.0, 3.0, -50.0, 10.0, 0.07, 0.35, 0.25, 2.0, 0.8, 2.5e-6, 1.0, 5.0, 11250.0, 0.0, 1.96 * 10^5, 500, 0.02, 833.33]
     ```
     Here the trilinear simplified constitutive model for steel materials is adopted.
-# 6. Solution
+### 6. Solution
     
     solving the model is realized by
     ```
@@ -137,7 +137,7 @@ and you are ready to go.
     `1.1` indicates the value of `total time` the model will run (second). 
     
     After this step, you already get the solution. A further step helps to output results and plot beautiful cracking pattern.
-# 7. Post process
+### 7. Post process
     
     Post process uses a function `post_process(model_name, relative_time_of_cracking_=[0.4, 0.8, 1.0], crack_plot_dirc_and_name_="D:/cracking pattern", output_displacement_directions_=[[[90 110; 0 200; 0 10], [3]]], output_load_directions_=[[[90 110; 0 200; 60 70], [3]]], step_interval_=300, load_dis_out_name_="D:/200_200_70_deck", plot_dis_load_region_="Yes")`.
     
