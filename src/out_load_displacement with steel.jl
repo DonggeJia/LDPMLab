@@ -10,7 +10,7 @@
 #mean_d_z = Geometry_parameters[10,1]; 
 #support_start= Geometry_parameters[12]
 #support_end  = width-Geometry_parameters[12]       
-F_residual = internal - external
+F_residual = internal
 #Point_loading=Geometry_parameters[13,1];
 output_direction_dis = zeros(Int64, gdl);
 #output_displacement_directions
@@ -36,8 +36,8 @@ end
 displace_12 = displace[output_direction_dis.==1, 1:step_interval:end]
 F_residual1 = F_residual[output_direction_load.==2, 1:step_interval:end]
 
-Force_disp_collect_load = [sum(F_residual1[:, i]) for i in axes(F_residual1, 2)]
-Force_disp_collect_dis = [mean(displace_12[:, i]) for i in axes(displace_12, 2)]
+Force_disp_collect_load = -[sum(F_residual1[:, i]) for i in axes(F_residual1, 2)]
+Force_disp_collect_dis = -[mean(displace_12[:, i]) for i in axes(displace_12, 2)]
 Force_disp_collect = hcat(Force_disp_collect_dis, Force_disp_collect_load)
 CSV.write(string(load_dis_out_name, "load_dis.csv"), Tables.table(Force_disp_collect), writeheader=false)
 
