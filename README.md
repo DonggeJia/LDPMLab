@@ -81,7 +81,7 @@ to reload all the procedures you've done in steps 1 and 2.
 This step implements the meshing process using Delauney tetrahedralization and modified Voronoi tesselation.
 A demonstration of the procedure from particel distribution to Delauney tetrahedralization and Voronoi meshing is
 <p align="center">
-    <img src="docs/src/from particel to mesh.png" width="450"/>
+    <img src="docs/src/from particel to mesh.png" width="750"/>
 </p>
 - for particle reinforced material
     ```
@@ -175,6 +175,7 @@ The cracking pattern for particle reinforced materials in Paraview is like
 <p align="center">
     <img src="docs/src/data ouput regions.png" width="450"/>
 </p>
+
 ## References
 Excellent introductions of LDPM are:
 

@@ -249,9 +249,9 @@ end
 # #traverse_distribution 
 # LDPM_bar_reforced.steel_layout = [50, 100, 150]
 
-# particle_distribution(LDPM_bar_reforced, "Yes", "D:/LDPM_geometry")
+# particle_distribution(LDPM, "Yes", "D:/LDPM_geometry")
 # @load "D:/LDPM_geometry.jld2"
-# Meshing(LDPM_bar_reforced, "Yes", "D:/LDPM_mesh_facets")
+# Meshing(LDPM, "Yes", "D:/LDPM_mesh_facets")
 # Boundary_setting([[[0 10; 0 200; 0 10], [1, 2, 3, 4, 5, 6], [0, 0, 0, 0, 0, 0]], [[190 200; 0 200; 0 10], [1, 2, 3], [0, 0, 0]], [[95 105; 0 200; 60 70], [3], [-0.2]]], "Yes")
 
 # 45000.0 # E_m -> Initial Elastic Modulus for the Matrix [MPa]
@@ -277,5 +277,5 @@ end
 # #Esh = 833.33 #Mpa
 # LDPM_bar_reforced.mechanical_parameters = [45000.0, 45000.0, 3.0, -50.0, 10.0, 0.07, 0.35, 0.25, 2.0, 0.8, 2.5e-6, 1.0, 5.0, 11250.0, 0.0, 1.96 * 10^5, 500, 0.02, 833.33]
 
-# Solutions(LDPM_bar_reforced, 0.2, 0.2) #loading [velocity, direction], Δt= round(2/median(ω_n),digits=5)
-# post_process(LDPM_bar_reforced, [0.4, 0.8, 1.0], "D:/cracking pattern", [[[90 110; 0 200; 0 10], [3]]], [[[90 110; 0 200; 60 70], [3]]], 300, "200_200_70 deck", "Yes")
+# Solutions(LDPM, 0.2, 0.8) #loading [velocity, direction], Δt= round(2/median(ω_n),digits=5)
+# post_process(LDPM, [0.4, 0.8, 1.0], "D:/cracking pattern", [[[90 110; 0 200; 0 10], [3]]], [[[90 110; 0 200; 60 70], [3]]], 300, "200_200_70 deck", "Yes")
