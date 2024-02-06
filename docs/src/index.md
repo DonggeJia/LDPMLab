@@ -17,3 +17,7 @@ Hello
 [1,1]+[0.2,0.4]
 ```
 Hello
+
+```@autodocs
+Modules = [LDPMLab]
+```
