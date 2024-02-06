@@ -48,7 +48,7 @@ LDPM_bar_reforced.steel_layout = [50, 100, 150]
 
 LDPM.mechanical_parameters = [45000.0, 45000.0, 3.0, -50.0, 10.0, 0.07, 0.35, 0.25, 2.0, 0.8, 2.5e-6, 1.0, 5.0, 11250.0, 0.0]
 
-LDPM_bar_reforced.mechanical_parameters = [45000.0, 45000.0, 3.0, -50.0, 10.0, 0.07, 0.35, 0.25, 2.0, 0.8, 2.5e-6, 1.0, 5.0, 11250.0, 0.0, 1.96 * 10^5, 500, 650, 0.02, 833.33]
+LDPM_bar_reforced.mechanical_parameters = [45000.0, 45000.0, 3.0, -50.0, 10.0, 0.07, 0.35, 0.25, 2.0, 0.8, 2.5e-6, 1.0, 5.0, 11250.0, 0.0, 1.96 * 10^5, 500, 0.02, 833.33]
 
 
 const Mat_parameters = LDPM_bar_reforced.mechanical_parameters # [E_m E_a σ_t σ_c σ_s G_t G_s α n_t n_c ρ kc_1 kc_2 K_c ζ]
@@ -66,7 +66,6 @@ const n_t = Mat_parameters[9] # Extract Tensile Exponential Parameter
 
 const E_steel = LDPM_bar_reforced.mechanical_parameters[end-3]
 const fyi = LDPM_bar_reforced.mechanical_parameters[end-2]
-#fu = 650 #Mpa
 const epsi_sh = LDPM_bar_reforced.mechanical_parameters[end-1]
 const Esh = LDPM_bar_reforced.mechanical_parameters[end] #Mpa
 
@@ -190,7 +189,7 @@ function Boundary_setting(loaded__region=[[[0 10; 0 200; 0 10], [1, 2, 3, 4, 5, 
 end
 global Δt = 0.000001
 global t_final = 0.2
-function Solutions(model_name, scale_delata_time=1.0, t_final_=0.8) #loading [velocity, direction], Δt= round(2/median(ω_n),digits=5)
+function Solutions(model_name, scale_delata_time=1.0, t_final_=0.8) #Δt= round(2/median(ω_n),digits=5)
     global Δt = Δt * scale_delata_time
     global t_final = t_final_
     if typeof(model_name) == ldpm
@@ -274,10 +273,9 @@ end
 # #add steel mechanical parameters
 # #E_steel = 1.96*10.0^5
 # #fyi = 500
-# #fu = 650 #Mpa
 # #epsi_sh = 0.02
 # #Esh = 833.33 #Mpa
-# LDPM_bar_reforced.mechanical_parameters = [45000.0, 45000.0, 3.0, -50.0, 10.0, 0.07, 0.35, 0.25, 2.0, 0.8, 2.5e-6, 1.0, 5.0, 11250.0, 0.0, 1.96 * 10^5, 500, 650, 0.02, 833.33]
+# LDPM_bar_reforced.mechanical_parameters = [45000.0, 45000.0, 3.0, -50.0, 10.0, 0.07, 0.35, 0.25, 2.0, 0.8, 2.5e-6, 1.0, 5.0, 11250.0, 0.0, 1.96 * 10^5, 500, 0.02, 833.33]
 
 # Solutions(LDPM_bar_reforced, 0.2, 0.2) #loading [velocity, direction], Δt= round(2/median(ω_n),digits=5)
 # post_process(LDPM_bar_reforced, [0.4, 0.8, 1.0], "D:/cracking pattern", [[[90 110; 0 200; 0 10], [3]]], [[[90 110; 0 200; 60 70], [3]]], 300, "200_200_70 deck", "Yes")

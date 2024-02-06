@@ -107,6 +107,6 @@ len=[Connect[i].Length for i in axes(Connect,1)]
 
 
 n_inc = size(displace,2)-1
-steps = [Int(round(relative_time_of_cracking[1]*n_inc)),Int(round(relative_time_of_cracking[2]*n_inc)),Int(round(relative_time_of_cracking[3]*n_inc))]
+steps = Int.(round.(relative_time_of_cracking[:].*n_inc))
 cell_types,w=vtk_cracks(sigma_N, sigma_T, eps_n, eps_t, E, alpha, Unique_Connections_Triangles,len, displace, steps, crack_plot_dirc_and_name)
 
