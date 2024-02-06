@@ -1,6 +1,6 @@
 
 module LDPMLab
-cd(@__DIR__)
+
 # import all packages needed
 using JLD2
 using DelimitedFiles
@@ -88,11 +88,11 @@ Excute particle distribution in material volume and save the data of particle di
 """
 function particle_distribution(model_name, particle_save="Yes", particle_dirc_and_name="LDPM_particle_distribution")
     if typeof(model_name) == ldpm
-        include("0.0 generate particles.jl")
-        include("0.1 particle position.jl")
+        include("src/0.0 generate particles.jl")
+        include("src/0.1 particle position.jl")
     elseif typeof(model_name) == ldpmbarr
-        include("0.0 generate particles with steel.jl")
-        include("0.1 particle position with steel.jl")
+        include("src/0.0 generate particles with steel.jl")
+        include("src/0.1 particle position with steel.jl")
     end
     if particle_save == "Yes"
         @save "$particle_dirc_and_name.jld2"
@@ -114,22 +114,22 @@ global steel_bond_uniques = []
 function Meshing(model_name, mesh_plot="Yes", mesh_dirc_and_name="LDPM_mesh_facets")
 
     if typeof(model_name) == ldpm
-        include("1_Random_Meshing_Delaunay.jl")
-        include("2_Geometrical_Properties.jl") # Evaluate Geometrical Properties of Tetrahedra
-        include("3_Projected_Areas.jl") # Compute Areas of Triangles Composing Every Connection
-        include("4_Connectivity_Matrix.jl") # Evaluate Connections Between Particles
+        include("src/1_Random_Meshing_Delaunay.jl")
+        include("src/2_Geometrical_Properties.jl") # Evaluate Geometrical Properties of Tetrahedra
+        include("src/3_Projected_Areas.jl") # Compute Areas of Triangles Composing Every Connection
+        include("src/4_Connectivity_Matrix.jl") # Evaluate Connections Between Particles
         if mesh_plot == "Yes"
-            include("4.5 Mesh plot.jl")
+            include("src/4.5 Mesh plot.jl")
         end
     elseif typeof(model_name) == ldpmbarr
-        include("1_Random_Meshing_Delaunay with_steel.jl")
-        include("2_Geometrical_Properties.jl") # Evaluate Geometrical Properties of Tetrahedra
-        include("3_Projected_Areas.jl") # Compute Areas of Triangles Composing Every Connection
-        include("4_Connectivity_Matrix_steel.jl") # Evaluate Connections Between Particles
+        include("src/1_Random_Meshing_Delaunay with_steel.jl")
+        include("src/2_Geometrical_Properties.jl") # Evaluate Geometrical Properties of Tetrahedra
+        include("src/3_Projected_Areas.jl") # Compute Areas of Triangles Composing Every Connection
+        include("src/4_Connectivity_Matrix_steel.jl") # Evaluate Connections Between Particles
         if mesh_plot == "Yes"
             global filename = mesh_dirc_and_name
-            include("4.5 Mesh plot.jl")
-            include("4.6 Steel plot.jl")
+            include("src/4.5 Mesh plot.jl")
+            include("src/4.6 Steel plot.jl")
         end
     end
     return gdl, Positions, gdl_n, Connect, TRI, Unique_Connections, Elements, Tet, Unique_Connections_Elements, B
@@ -184,7 +184,7 @@ global plot_boundary = "0"
 function Boundary_setting(loaded__region=[[[0 10; 0 200; 0 10], [1, 2, 3, 4, 5, 6], [0, 0, 0, 0, 0, 0]], [[190 200; 0 200; 0 10], [1, 2, 3], [0, 0, 0]], [[95 105; 0 200; 60 70], [3], [-0.2]]], plot__boundary="Yes")
     global loaded_region = loaded__region
     global plot_boundary = plot__boundary
-    include("5_Boundary.jl")
+    include("src/5_Boundary.jl")
     return Boun, Boun1
 end
 global Δt = 0.000001
@@ -193,23 +193,23 @@ function Solutions(model_name, scale_delata_time=1.0, t_final_=0.8) #Δt= round(
     global Δt = Δt * scale_delata_time
     global t_final = t_final_
     if typeof(model_name) == ldpm
-        include("6_Material_Properties.jl") # Calculate Stable Time Step
-        include("11_Boundary_Conditions.jl") # Function to Calculate Boundary Velocities
-        include("12_Volumetric_Deformation.jl") # Function to Update Volumetric Deformation of Lattice Elements
-        include("13_Epsilon_Update.jl") # Function to Update Maximum Deformation (Used in Constitutive Law)
-        include("14_Element_Response.jl") # Function Used to Obtain Element Forces
-        include("15_Constitutive_Law.jl") # Constitutive Law
+        include("src/6_Material_Properties.jl") # Calculate Stable Time Step
+        include("src/11_Boundary_Conditions.jl") # Function to Calculate Boundary Velocities
+        include("src/12_Volumetric_Deformation.jl") # Function to Update Volumetric Deformation of Lattice Elements
+        include("src/13_Epsilon_Update.jl") # Function to Update Maximum Deformation (Used in Constitutive Law)
+        include("src/14_Element_Response.jl") # Function Used to Obtain Element Forces
+        include("src/15_Constitutive_Law.jl") # Constitutive Law
         #include("15_Constitutive_Law steel and bond.jl") # Constitutive Law
-        include("Central_Difference_Integration.jl")
+        include("src/Central_Difference_Integration.jl")
     elseif typeof(model_name) == ldpmbarr
-        include("6_Material_Properties with steel.jl") # Calculate Stable Time Step
-        include("11_Boundary_Conditions.jl") # Function to Calculate Boundary Velocities
-        include("12_Volumetric_Deformation.jl") # Function to Update Volumetric Deformation of Lattice Elements
-        include("13_Epsilon_Update.jl") # Function to Update Maximum Deformation (Used in Constitutive Law)
-        include("14_Element_Response.jl") # Function Used to Obtain Element Forces
-        include("15_Constitutive_Law.jl") # Constitutive Law
-        include("15_Constitutive_Law steel and bond.jl") # Constitutive Law
-        include("Central_Difference_Integration_with steel.jl")
+        include("src/6_Material_Properties with steel.jl") # Calculate Stable Time Step
+        include("src/11_Boundary_Conditions.jl") # Function to Calculate Boundary Velocities
+        include("src/12_Volumetric_Deformation.jl") # Function to Update Volumetric Deformation of Lattice Elements
+        include("src/13_Epsilon_Update.jl") # Function to Update Maximum Deformation (Used in Constitutive Law)
+        include("src/14_Element_Response.jl") # Function Used to Obtain Element Forces
+        include("src/15_Constitutive_Law.jl") # Constitutive Law
+        include("src/15_Constitutive_Law steel and bond.jl") # Constitutive Law
+        include("src/Central_Difference_Integration_with steel.jl")
     end
     return displace, eps_, eps_n, eps_t, sigma_eff, sigma_N, sigma_T, internal, external
 end
@@ -229,13 +229,13 @@ function post_process(model_name, relative_time_of_cracking_=[0.4, 0.8, 1.0], cr
     global load_dis_out_name = load_dis_out_name_
     global plot_dis_load_region = plot_dis_load_region_
     if typeof(model_name) == ldpm
-        include("vtk_cracks_ non_projected.jl") # Calculate Stable Time Step
+        include("src/vtk_cracks_ non_projected.jl") # Calculate Stable Time Step
 
     elseif typeof(model_name) == ldpmbarr
         gdl = gdlS
-        include("vtk_cracks_ non_projected steel.jl") # Calculate Stable Time Step
+        include("src/vtk_cracks_ non_projected steel.jl") # Calculate Stable Time Step
     end
-    include("out_load_displacement.jl")
+    include("src/out_load_displacement.jl")
 end
 
 export particle_distribution, Meshing, Boundary_setting, Solutions, post_process,
