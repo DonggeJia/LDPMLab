@@ -10,7 +10,7 @@
 #mean_d_z = Geometry_parameters[10,1]; 
 #support_start= Geometry_parameters[12]
 #support_end  = width-Geometry_parameters[12]       
-F_residual = internal - external
+F_residual = internal# - external
 #Point_loading=Geometry_parameters[13,1];
 output_direction_dis = zeros(Int64, gdl);
 #output_displacement_directions
