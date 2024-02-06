@@ -79,17 +79,26 @@ If particle distribution is stored, you can use
 to reload all the procedures you've done in steps 1 and 2.
 ### 3. Meshing
 This step implements the meshing process using Delauney tetrahedralization and modified Voronoi tesselation.
+A demonstration of the procedure from particel distribution to Delauney tetrahedralization and Voronoi meshing is
+<p align="center">
+    <img src="docs/src/from particel to mesh.png" width="450"/>
+</p>
 - for particle reinforced material
     ```
     Meshing(LDPM, "Yes", "D:/LDPM_mesh_facets")
     ```
-    where "Yes" means save a vtk file for paraview to plot the contact facets in the material volume. 
+    where "Yes" means save a vtk file for Paraview to plot the contact facets in the material volume. 
     
     "D:/LDPM_mesh_facets" indicates the filefolder and filename for storage.
 - for particle reinforced material with reforcing bars
     ```
     Meshing(LDPM_bar_reforced, "Yes", "D:/LDPM_mesh_facets")
     ```
+The meshing plot for particle reinforced material with reforcing bars is like
+<p align="center">
+    <img src="docs/src/particel reinforced material with reforcing bar.png" width="450"/>
+</p>
+
 ### 4. Set a boundary condition
     
 Setting boundaries requires runing a function:
@@ -161,6 +170,11 @@ The points that outputed data comes from have a 6-number string representing 6 d
 Notice that for the stability of dynamical solution, the first 500 time steps in the package are shrinked, while the following time steps use same step length.
 
 `load_dis_out_name_` indicates the filefolder and filename for the displacement and load data storage.
+
+The cracking pattern for particle reinforced materials in Paraview is like
+<p align="center">
+    <img src="docs/src/data ouput regions.png" width="450"/>
+</p>
 ## References
 Excellent introductions of LDPM are:
 
