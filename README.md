@@ -120,7 +120,7 @@ and you are ready to go.
     LDPM_bar_reforced.mechanical_parameters = [45000.0, 45000.0, 3.0, -50.0, 10.0, 0.07, 0.35, 0.25, 2.0, 0.8, 2.5e-6, 1.0, 5.0, 11250.0, 0.0, 1.96 * 10^5, 500, 0.02, 833.33]
     ```
     Here the trilinear simplified constitutive model for steel materials is adopted.
-### 6. Solution
+### 6. Solution ###
     
     solving the model is realized by
     ```
