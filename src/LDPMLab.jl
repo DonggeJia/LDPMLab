@@ -87,7 +87,7 @@ Excute particle distribution in material volume and save the data of particle di
 - `particle_dirc_and_name` -- a string indicating the filefolder and filename saving particle distribution. By default, `LDPM_particle_distribution`  is used. This argument can be `D:/Juliafiles/LDPM_particle_distribution` as well.
 
 """
-function particle_distribution(model_name, particle_save="Yes", particle_dirc_and_name="LDPM_particle_distribution")
+function Particle_distribution(model_name, particle_save="Yes", particle_dirc_and_name="LDPM_particle_distribution")
     if typeof(model_name) == ldpm
         include("src/0.0 generate particles.jl")
         include("src/0.1 particle position.jl")
@@ -112,6 +112,7 @@ end
 global filename = "0"
 global steel_uniques = []
 global steel_bond_uniques = []
+
 function Meshing(model_name, mesh_plot="Yes", mesh_dirc_and_name="LDPM_mesh_facets")
 
     if typeof(model_name) == ldpm
@@ -239,7 +240,7 @@ function post_process(model_name, relative_time_of_cracking_=[0.4, 0.8, 1.0], cr
     include("src/out_load_displacement.jl")
 end
 
-export particle_distribution, Meshing, Boundary_setting, Solutions, post_process,
+export Particle_distribution, Meshing, Boundary_setting, Solutions, post_process,
     LDPM, LDPM_bar_reforced
 end
 
