@@ -173,8 +173,9 @@ Notice that for the stability of dynamical solution, the first 500 time steps in
 
 The cracking pattern for particle reinforced materials in Paraview is like
 <p align="center">
-    <img src="docs/src/data ouput regions.png" width="450"/>
+    <img src="docs/src/cracking and dis_load output.png" width="450"/>
 </p>
+Notice that Paraview has rich functionality in beautifying plots.
 
 ## References
 Excellent introductions of LDPM are:
