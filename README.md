@@ -12,7 +12,7 @@ This package is developed under the supervision of [Prof. Fascetti]() and Prof. 
 - Specially for:
     - Realistic meso-scale simulation of mechanical failure of particle-reinforced materials, such as concrete, shale, masonry, cementicious composites, granular rocks, polymers, etc.
     - Meso-scale mass transport simulation in damaged or non-damaged particle-reinforced materials
-    - Interective multiphysics simulation of particle-reinforced materials with bar reinforcement
+    - Interective multiphysics simulation of particle-reinforced materials with reinforcing bars
     - Both static and dynamic loading conditions and transport boundaries are applicable
     - Advanced customizable nonlinear meso-scale constitutive laws for element-wise mechanical response and mass transportation
 - More efficient sustitute for FEM in simulating non-soft materials: 
@@ -42,12 +42,58 @@ and you are ready to go.
 ## Workflow for application
 1. Speficiy geometry parameters for a LDPM model
 - for particle reinforced material:
-    - Enter the values of material size in x, y, z dimensions (mm), cement content (kg/mm^3), aggregate volume fraction(-), maximum particle size (mm), minimum particle size (mm), material parameter (-) for particle distribution that 0.5 corresponds to the classical Fuller curve, and scale factor for minimum distance check in particle distribution that 1.0 means particle centroids must have a distance larger than 1.0*(radius of the first particle + radius of the second particle)
+    - Enter the values of material size in x, y, z dimensions (mm), cement content (kg/mm^3), aggregate volume fraction(-), maximum particle size (mm), minimum particle size (mm), material parameter (-) for particle distribution that 0.5 corresponds to the classical Fuller curve, and scaling factor for minimum distance check in particle distribution that 1.0 means particle centroids must have a distance larger than 1.0*(radius of the first particle + radius of the second particle)
     ```
-    
+    LDPM.geometry_parameters = [200, 200, 70, 0.734, 15, 10, 0.45, 1.1]
     ```
-- for 
-    - Enter the values of material size in x, y, z dimensions (mm), cement content (kg/mm^3), aggregate volume fraction(-), maximum particle size (mm), minimum particle size (mm), material parameter (-) for particle distribution that 0.5 corresponds to the classical Fuller curve, and scale factor for minimum distance check in particle distribution that 1.0 means particle centroids must have a distance larger than 1.0*(radius of the first particle + radius of the second particle)
+- for particle reinforced material with reforcing bars
+    - Enter the values of material size in x, y, z dimensions (mm), cement content (kg/mm^3), aggregate volume fraction(-), maximum particle size (mm), minimum particle size (mm), material parameter (-) for particle distribution that 0.5 corresponds to the classical Fuller curve, scaling factor (-) for minimum distance check in particle distribution that 1.0 means particle centroids must have a distance larger than 1.0*(radius of the first particle + radius of the second particle), height (in z direction) of reinforcing bars (mm), and diameter of reinforcing bars (mm) 
+    ```
+    LDPM_bar_reforced.geometry_parameters = [200, 200, 70, 0.734, 15, 10, 0.45, 1.1, 20.0, 16.0]
+    ```
+    - Enter the transverse (in y direction) distribution of reinforcing bars (mm)
+    ```
+    LDPM_bar_reforced.steel_layout = [50, 100, 150]
+    ```
+    By default, the orientation of reinforcing bars is along the x-coordinate
+2. Distribute particles in the material volume
+- for particle reinforced material
+    ```
+    particle_distribution(LDPM, "Yes", "D:/LDPM_geometry")
+    ```
+    where "Yes" means saving a JLD2 file with particle coordinates and their corresponding diameters. By default, `Yes` is used. Other strings except `Yes` means not storing the current particle distribution. Saving particle distribution is encouraged so that it can be used again whenever Julia session is restarted, excluding the influence of random particle distribution on solutions.
+    "D:/LDPM_geometry" indicates the filefolder and filename for particle distribution storage.
+- for particle reinforced material with reforcing bars
+    ```
+    particle_distribution(LDPM_bar_reforced, "Yes", "D:/LDPM_geometry")
+    ```
+If particle distribution is stored, you can use
+```
+@load "D:/LDPM_geometry.jld2"
+```
+to reload all the procedures you've done in steps 1 and 2.
+3. Meshing
+This step implements the meshing process using Delauney tetrahedralization and modified Voronoi tesselation.
+- for particle reinforced material
+    ```
+    Meshing(LDPM, "Yes", "D:/LDPM_mesh_facets")
+    ```
+    where "Yes" means save a vtk file for paraview to plot the contact facets in the material volume. 
+    "D:/LDPM_mesh_facets" indicates the filefolder and filename for storage.
+- for particle reinforced material with reforcing bars
+    ```
+    Meshing(LDPM_bar_reforced, "Yes", "D:/  LDPM_mesh_facets")
+    ```
+4. Set a boundary condition
+
+Setting boundaries requires runing a function:
+`Boundary_setting(loaded__region, plot__boundary)
+
+```
+Boundary_setting([[[0 10; 0 200; 0 10], [1, 2, 3, 4, 5, 6], [0, 0, 0, 0, 0, 0]], [[190 200; 0 200; 0 10], [1, 2, 3], [0, 0, 0]], [[95 105; 0 200; 60 70], [3], [-0.2]]], "Yes")
+```
+`loaded_region` is a 
+
 
 
 ```

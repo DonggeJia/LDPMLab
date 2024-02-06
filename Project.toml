@@ -24,8 +24,6 @@ TetGen = "c5d3f3f7-f850-59f6-8a2e-ffc6dc1317ea"
 
 [compat]
 julia = "1.8.5"
-Blink = "0.12.5"
-PlotlyJS = "0.14.1"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
