@@ -63,7 +63,7 @@ and you are ready to go.
 ### 2. Distribute particles in the material volume
 - for particle reinforced material
     ```
-    particle_distribution(LDPM, "Yes", "D:/LDPM_geometry")
+    Particle_distribution(LDPM, "Yes", "D:/LDPM_geometry")
     ```
     where "Yes" means saving a JLD2 file with particle coordinates and their corresponding diameters. By default, `Yes` is used. Other strings except `Yes` means not storing the current particle distribution. Saving particle distribution is encouraged so that it can be used again whenever Julia session is restarted, excluding the influence of random particle distribution on solutions.
 
@@ -72,6 +72,12 @@ and you are ready to go.
     ```
     particle_distribution(LDPM_bar_reforced, "Yes", "D:/LDPM_geometry")
     ```
+A particle gradation curve will be generated after running this function, for example,
+
+<p align="center">
+    <img src="docs/src/particle gradation curve will be generated.png" width="450"/>
+</p>
+
 If particle distribution is stored, you can use
 ```
 @load "D:/LDPM_geometry.jld2"

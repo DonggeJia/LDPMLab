@@ -9,6 +9,4 @@ Documentation for [LDPMLab](https://github.com/DonggeJia/LDPMLab.jl).
 ```@index
 ```
 
-```@autodocs
-Modules = [LDPMLab]
-```
+Hello
