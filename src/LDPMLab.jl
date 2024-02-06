@@ -1,6 +1,6 @@
 
 module LDPMLab
-
+cd(@__DIR__)
 # import all packages needed
 using JLD2
 using DelimitedFiles
@@ -232,6 +232,7 @@ function post_process(model_name, relative_time_of_cracking_=[0.4, 0.8, 1.0], cr
         include("vtk_cracks_ non_projected.jl") # Calculate Stable Time Step
 
     elseif typeof(model_name) == ldpmbarr
+        gdl = gdlS
         include("vtk_cracks_ non_projected steel.jl") # Calculate Stable Time Step
     end
     include("out_load_displacement.jl")

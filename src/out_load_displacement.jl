@@ -12,7 +12,7 @@
 #support_end  = width-Geometry_parameters[12]       
 F_residual = internal - external
 #Point_loading=Geometry_parameters[13,1];
-output_direction_dis = zeros(Int64, gdlS);
+output_direction_dis = zeros(Int64, gdl);
 #output_displacement_directions
 for region in output_displacement_directions
     output_points = intersect(findall(region[1][1, 1] .<= all_nodes_with_steel[:, 1] .<= region[1][1, 2]), findall(region[1][2, 1] .<= all_nodes_with_steel[:, 2] .<= region[1][2, 2]), findall(region[1][3, 1] .<= all_nodes_with_steel[:, 3] .<= region[1][3, 2]))
@@ -22,7 +22,7 @@ for region in output_displacement_directions
         end
     end
 end
-output_direction_load = zeros(Int64, gdlS);
+output_direction_load = zeros(Int64, gdl);
 #output_load_directions
 for region in output_load_directions
     output_points = intersect(findall(region[1][1, 1] .<= all_nodes_with_steel[:, 1] .<= region[1][1, 2]), findall(region[1][2, 1] .<= all_nodes_with_steel[:, 2] .<= region[1][2, 2]), findall(region[1][3, 1] .<= all_nodes_with_steel[:, 3] .<= region[1][3, 2]))
