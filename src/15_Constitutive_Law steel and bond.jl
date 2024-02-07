@@ -1,11 +1,11 @@
 function Constitutive_Law_steel(eps__n)
     if eps__n*E_steel < fyi
-        return eps__n*E_steel
+        return eps__n*E_steel/10
     else
         if eps__n<epsi_sh
-            return fyi
+            return fyi/10
         else
-            return (fyi+(eps__n-epsi_sh)*Esh)
+            return (fyi+(eps__n-epsi_sh)*Esh)/10
         end
     end
 end

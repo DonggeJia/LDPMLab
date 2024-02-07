@@ -41,7 +41,7 @@ if plot_boundary == "Yes"
     for i in axes(Positions, 1)
         push!(text_, join(map(string, text_1[i*gdl_n-5:i*gdl_n])))
     end
-    plt3d = PlotlyJS.scatter3d(; x=Positions[:, 1], y=Positions[:, 2], z=Positions[:, 3], text=text_,
+    plt3d = PlotlyJS.scatter3d(; x=Positions[:, 1], y=Positions[:, 2], z=Positions[:, 3], text=collect(1:size(Positions,1)),
         mode="markers+text", opacity=0.9, marker=attr(color="rgb(127, 127, 127)"))
     layout = Layout(margin=attr(l=40, r=40, t=40, b=40), scene_camera=attr(
         up=attr(x=0, y=0, z=1),

@@ -1,5 +1,5 @@
 
-module LDPMLab
+#module LDPMLab
 
 # import all packages needed
 using JLD2
@@ -115,14 +115,14 @@ global steel_uniques = []
 global steel_bond_uniques = []
 
 function Meshing(model_name, mesh_plot="Yes", mesh_dirc_and_name="LDPM_mesh_facets")
-
+    global filename = mesh_dirc_and_name
     if typeof(model_name) == ldpm
         include("1_Random_Meshing_Delaunay.jl")
         include("2_Geometrical_Properties.jl") # Evaluate Geometrical Properties of Tetrahedra
         include("3_Projected_Areas.jl") # Compute Areas of Triangles Composing Every Connection
         include("4_Connectivity_Matrix.jl") # Evaluate Connections Between Particles
         if mesh_plot == "Yes"
-            global filename = mesh_dirc_and_name
+
             include("4.5 Mesh plot.jl")
             include("4.5.5 Delaunry plot.jl")
         end
@@ -132,7 +132,7 @@ function Meshing(model_name, mesh_plot="Yes", mesh_dirc_and_name="LDPM_mesh_face
         include("3_Projected_Areas.jl") # Compute Areas of Triangles Composing Every Connection
         include("4_Connectivity_Matrix_steel.jl") # Evaluate Connections Between Particles
         if mesh_plot == "Yes"
-            global filename = mesh_dirc_and_name
+            #global filename = mesh_dirc_and_name
             include("4.5 Mesh plot.jl")
             include("4.5.5 Delaunry plot.jl")
             include("4.6 Steel plot.jl")
@@ -166,7 +166,7 @@ output is a real interval, otherwise it is a complex interval.
 
 
 """
-function Boundary_setting(loaded__region=[[[0 10; 0 200; 0 10], [1, 2, 3, 4, 5, 6], [0, 0, 0, 0, 0, 0]], [[190 200; 0 200; 0 10], [1, 2, 3], [0, 0, 0]], [[95 105; 0 200; 60 70], [3], [-0.2]]], plot__boundary="Yes")
+function Boundary_setting(loaded__region=[[[0 10; 0 200; 0 10], [1, 2, 3], [0, 0, 0]], [[190 200; 0 200; 0 10], [3], [0]], [[95 105; 0 200; 60 70], [3], [-0.2]]], plot__boundary="Yes")
     global loaded_region = loaded__region
     global plot_boundary = plot__boundary
     include("5_Boundary.jl")
@@ -229,58 +229,58 @@ function Post_process(model_name, relative_time_of_cracking_=[0.4, 0.8, 1.0], cr
 
 end
 
-export Particle_distribution, Meshing, Boundary_setting, Solutions, Post_process,
-    LDPM, LDPM_bar_reforced
-end
+# export Particle_distribution, Meshing, Boundary_setting, Solutions, Post_process,
+#     LDPM, LDPM_bar_reforced
+# end
 
 
 #!use of package, units: mm, N, Mpa
-# #imen1, dimen2, dimen3, va, da, d0, nF, magnifyp
-# LDPM.geometry_parameters = [200, 200, 70, 0.734, 15, 10, 0.45, 1.1]
+#imen1, dimen2, dimen3, va, da, d0, nF, magnifyp
+LDPM.geometry_parameters = [200, 200, 70, 0.734, 15, 10, 0.45, 1.1]
 
-# Particle_distribution(LDPM, "Yes", "../output examples/LDPM_geometry")
-# #@load "../output examples/LDPM_geometry.jld2"
-# Meshing(LDPM, "Yes", "../output examples/LDPM_mesh_facets")
-# Boundary_setting([[[0 10; 0 200; 0 10], [1, 2, 3, 4, 5, 6], [0, 0, 0, 0, 0, 0]], [[190 200; 0 200; 0 10], [1, 2, 3], [0, 0, 0]], [[95 105; 0 200; 60 70], [3], [-0.2]]], "Yes")
+Particle_distribution(LDPM, "Yes", "../output examples/LDPM_geometry")
+@load "../output examples/LDPM_geometry.jld2"
+Meshing(LDPM, "Yes", "../output examples/LDPM_mesh_facets")
+Boundary_setting([[[0 10; 0 2; 0 10], [2], [0]], [[0 30; 0 200; 0 10], [1, 3], [0, 0]], [[170 200; 0 200; 0 10], [3], [0]], [[95 105; 0 200; 60 70], [3], [-0.2]]], "Yes")
 
-# #45000.0 # E_m -> Initial Elastic Modulus for the Matrix [MPa]
-# #45000.0 # E_a -> Initial Elastic Modulus for the Aggregates [MPa]
-# #3.0 # sigma_t -> Tension Limit [MPa]
-# #-50.0 # sigma_c -> Compression Limit [MPa]
-# #10.0 # sigma_s -> Shear Limit [MPa]
-# #0.07 # G_t -> Mode I Fracture Energy [N/mm]
-# #0.35 # G_s -> Mode II Fracture Energy [N/mm]
-# #0.25 # alpha -> Tangential-to-Normal Stiffness Ratio (Controls Poisson's Effect) [-]
-# #2.0 # n_t -> Exponent that Controls Transition of Softening Parameter [-]
-# #0.8 # n_c -> Exponent that Controls Transition of Hardening Parameter [-]
-# #2.5e-6 # rho -> Material's Mass Density [ton/mm^3]
-# #1.0 # kc1 -> Volumetric Compression Parameter [-]
-# #5.0 # kc2 -> Volumetric Compression Parameter [-]
-# #11250.0 # K_c -> Parameter that Governs the Post-Peak Behavior in Compression [-] 
-# #0.0 # zeta -> damping coefficient
-# LDPM.mechanical_parameters = [45000.0, 45000.0, 3.0, -50.0, 10.0, 0.07, 0.35, 0.25, 2.0, 0.8, 2.5e-6, 1.0, 5.0, 11250.0, 0.0]
+#45000.0 # E_m -> Initial Elastic Modulus for the Matrix [MPa]
+#45000.0 # E_a -> Initial Elastic Modulus for the Aggregates [MPa]
+#3.0 # sigma_t -> Tension Limit [MPa]
+#-50.0 # sigma_c -> Compression Limit [MPa]
+#10.0 # sigma_s -> Shear Limit [MPa]
+#0.07 # G_t -> Mode I Fracture Energy [N/mm]
+#0.35 # G_s -> Mode II Fracture Energy [N/mm]
+#0.25 # alpha -> Tangential-to-Normal Stiffness Ratio (Controls Poisson's Effect) [-]
+#2.0 # n_t -> Exponent that Controls Transition of Softening Parameter [-]
+#0.8 # n_c -> Exponent that Controls Transition of Hardening Parameter [-]
+#2.5e-6 # rho -> Material's Mass Density [ton/mm^3]
+#1.0 # kc1 -> Volumetric Compression Parameter [-]
+#5.0 # kc2 -> Volumetric Compression Parameter [-]
+#11250.0 # K_c -> Parameter that Governs the Post-Peak Behavior in Compression [-] 
+#0.0 # zeta -> damping coefficient
+LDPM.mechanical_parameters = [45000.0, 45000.0, 3.0, -50.0, 10.0, 0.07, 0.35, 0.25, 2.0, 0.8, 2.5e-6, 1.0, 5.0, 11250.0, 0.0]
 
-# Solutions(LDPM, 1, 1.2) # Δt= round(2/median(ω_n),digits=5)
-# Post_process(LDPM, [0.4, 0.8, 1.0], "../output examples/cracking pattern", [[[90 110; 0 200; 0 10], [3]]], [[[90 110; 0 200; 60 70], [3]]], 300, "../output examples/200_200_70 deck", "Yes")
-
-
+Solutions(LDPM, 1, 1.2) # Δt= round(2/median(ω_n),digits=5)
+Post_process(LDPM, [0.4, 0.8, 1.0], "../output examples/cracking pattern", [[[90 110; 0 200; 0 10], [3]]], [[[90 110; 0 200; 60 70], [3]]], 300, "../output examples/200_200_70 deck", "Yes")
 
 
-# dimen1, dimen2, dimen3, va, da, d0, nF, magnifyp, height_S, diameter_S
-# LDPM_bar_reforced.geometry_parameters = [200, 200, 70, 0.734, 15, 10, 0.45, 1.1, 20.0, 16.0]
-# #traverse_distribution 
-# LDPM_bar_reforced.steel_layout = [50, 100, 150]
 
-# Particle_distribution(LDPM_bar_reforced, "Yes", "../output examples/LDPM_geometry")
-# #@load "../output examples/LDPM_geometry.jld2"
-# Meshing(LDPM_bar_reforced, "Yes", "../output examples/LDPM_mesh_facets")
-# Boundary_setting([[[0 10; 0 200; 0 10], [1, 2, 3, 4, 5, 6], [0, 0, 0, 0, 0, 0]], [[190 200; 0 200; 0 10], [1, 2, 3], [0, 0, 0]], [[95 105; 0 200; 60 70], [3], [-0.2]]], "Yes")
-# #add steel mechanical parameters
-# #E_steel = 1.96*10.0^5
-# #fyi = 500
-# #epsi_sh = 0.02
-# #Esh = 833.33 #Mpa
-# LDPM_bar_reforced.mechanical_parameters = [45000.0, 45000.0, 3.0, -50.0, 10.0, 0.07, 0.35, 0.25, 2.0, 0.8, 2.5e-6, 1.0, 5.0, 11250.0, 0.0, 1.96 * 10^5, 500, 0.02, 833.33]
 
-# Solutions(LDPM_bar_reforced, 0.2, 0.3) # Δt= round(2/median(ω_n),digits=5)
-# Post_process(LDPM_bar_reforced, [0.4, 0.8, 1.0], "../output examples/cracking pattern", [[[90 110; 0 200; 0 10], [3]]], [[[90 110; 0 200; 60 70], [3]]], 300, "../output examples/200_200_70 deck", "Yes")
+#dimen1, dimen2, dimen3, va, da, d0, nF, magnifyp, height_S, diameter_S
+LDPM_bar_reforced.geometry_parameters = [200, 200, 70, 0.734, 15, 10, 0.45, 1.1, 20.0, 8.0]
+#traverse_distribution 
+LDPM_bar_reforced.steel_layout = [50, 100, 150]
+
+Particle_distribution(LDPM_bar_reforced, "Yes", "../output examples/LDPM_geometry")
+#@load "../output examples/LDPM_geometry.jld2"
+Meshing(LDPM_bar_reforced, "Yes", "../output examples/LDPM_mesh_facets")
+Boundary_setting([[[0 10; 0 2; 0 10], [2], [0]], [[0 30; 0 200; 0 10], [1, 3], [0, 0]], [[170 200; 0 200; 0 10], [3], [0]], [[95 105; 0 200; 60 70], [3], [-0.2]]], "Yes")
+#add steel mechanical parameters
+#E_steel = 1.96*10.0^5
+#fyi = 500
+#epsi_sh = 0.02
+#Esh = 833.33 #Mpa
+LDPM_bar_reforced.mechanical_parameters = [45000.0, 45000.0, 3.0, -50.0, 10.0, 0.07, 0.35, 0.25, 2.0, 0.8, 2.5e-6, 1.0, 5.0, 11250.0, 0.0, 1.96 * 10^5, 500, 0.02, 833.33]
+
+Solutions(LDPM_bar_reforced, 0.2, 0.3) # Δt= round(2/median(ω_n),digits=5)
+Post_process(LDPM_bar_reforced, [0.4, 0.8, 1.0], "../output examples/cracking pattern", [[[90 110; 0 200; 0 10], [3]]], [[[90 110; 0 200; 60 70], [3]]], 300, "../output examples/200_200_70 deck", "Yes")

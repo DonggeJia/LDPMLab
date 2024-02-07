@@ -13,7 +13,11 @@ function vtk_cracks(sigma_n, sigma_t, epsilon_n, epsilon_t, E, α, Unique_Connec
                  #w_n = len[jj]*(epsilon_n[jj,ii])
                  #w_t = len[jj]*(epsilon_t[jj,ii])
                 ## w_t = 0
-                w[jj,ii] = sqrt(w_n^2 + w_t^2)# crack_width
+                if w_n<0
+                w[jj,ii] = -sqrt(w_n^2 + w_t^2)# crack_width
+                else
+                w[jj,ii] = sqrt(w_n^2 + w_t^2)
+                end
             end
         end
     end

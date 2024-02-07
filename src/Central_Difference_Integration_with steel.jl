@@ -103,14 +103,13 @@ function Central_Difference_Integration(t_final, nel1, Δt)
         F[Connect[iel].DOFs] += qi[iel] # Update Internal Forces Vector with the Value of Internal Forces Computed
     end
     for iel = nel+size(steel_uniques, 1)+1:nel_S
-        leng_th = Connect[iel].Length
         #id_1 = Connect[iel].ID1; # ID of 1st Node
         #id_2 = Connect[iel].ID2; # ID of 2nd Node
         area = Connect[iel].Area # extract cross-sectional area
         length_ = Connect[iel].Length # Length of the Current Connection
         el_disp = U[Connect[iel].DOFs] # Element Displacement Vector [U_I ; U_J]
         qi[iel], eps_[iel, n_i:n_i+1], eps_n[iel, n_i:n_i+1], eps_t[iel, n_i:n_i+1], sigma_eff[iel, n_i:n_i+1], sigma_N[iel, n_i:n_i+1], sigma_T[iel, n_i:n_i+1] = Element_Response_bond(
-            eps_n[iel, n_i:n_i+1], eps_t[iel, n_i:n_i+1], eps_[iel, n_i:n_i+1], E[iel], sigma_N[iel, n_i:n_i+1], sigma_T[iel, n_i:n_i+1], sigma_eff[iel, n_i:n_i+1], eps_pos_max[iel], eps_neg_max[iel], eps_n_max[iel], eps_t_max[iel], K_t[iel], K_s[iel], eps_vol[iel], area, length_, el_disp, B[iel], leng_th)
+            eps_n[iel, n_i:n_i+1], eps_t[iel, n_i:n_i+1], eps_[iel, n_i:n_i+1], E[iel], sigma_N[iel, n_i:n_i+1], sigma_T[iel, n_i:n_i+1], sigma_eff[iel, n_i:n_i+1], eps_pos_max[iel], eps_neg_max[iel], eps_n_max[iel], eps_t_max[iel], K_t[iel], K_s[iel], eps_vol[iel], area, length_, el_disp, B[iel])
         F[Connect[iel].DOFs] += qi[iel] # Update Internal Forces Vector with the Value of Internal Forces Computed
     end
     internal[:, n_i+1] = F # Store Force Values
@@ -175,14 +174,13 @@ function Central_Difference_Integration(t_final, nel1, Δt)
             F[Connect[iel].DOFs] += qi[iel] # Update Internal Forces Vector with the Value of Internal Forces Computed
         end
         for iel = nel+size(steel_uniques, 1)+1:nel_S
-            leng_th = Connect[iel].Length
             #id_1 = Connect[iel].ID1; # ID of 1st Node
             #id_2 = Connect[iel].ID2; # ID of 2nd Node
             area = Connect[iel].Area # extract cross-sectional area
             length_ = Connect[iel].Length # Length of the Current Connection
             el_disp = U[Connect[iel].DOFs] # Element Displacement Vector [U_I ; U_J]
             qi[iel], eps_[iel, n_i:n_i+1], eps_n[iel, n_i:n_i+1], eps_t[iel, n_i:n_i+1], sigma_eff[iel, n_i:n_i+1], sigma_N[iel, n_i:n_i+1], sigma_T[iel, n_i:n_i+1] = Element_Response_bond(
-                eps_n[iel, n_i:n_i+1], eps_t[iel, n_i:n_i+1], eps_[iel, n_i:n_i+1], E[iel], sigma_N[iel, n_i:n_i+1], sigma_T[iel, n_i:n_i+1], sigma_eff[iel, n_i:n_i+1], eps_pos_max[iel], eps_neg_max[iel], eps_n_max[iel], eps_t_max[iel], K_t[iel], K_s[iel], eps_vol[iel], area, length_, el_disp, B[iel], leng_th)
+                eps_n[iel, n_i:n_i+1], eps_t[iel, n_i:n_i+1], eps_[iel, n_i:n_i+1], E[iel], sigma_N[iel, n_i:n_i+1], sigma_T[iel, n_i:n_i+1], sigma_eff[iel, n_i:n_i+1], eps_pos_max[iel], eps_neg_max[iel], eps_n_max[iel], eps_t_max[iel], K_t[iel], K_s[iel], eps_vol[iel], area, length_, el_disp, B[iel])
             F[Connect[iel].DOFs] += qi[iel] # Update Internal Forces Vector with the Value of Internal Forces Computed
         end
         internal[:, n_i+1] = F # Store Force Values

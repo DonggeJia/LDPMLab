@@ -63,7 +63,7 @@ function Element_Response_steel(eps_n,eps_t,eps_,E,sigma_N,sigma_T,sigma_eff,eps
     end
 
     
-    function Element_Response_bond(eps_n,eps_t,eps_,E,sigma_N,sigma_T,sigma_eff,eps_pos_max,eps_neg_max,eps_n_max,eps_t_max,K_t,K_s,eps_vol,area,len,el_disp,B, leng_th)
+    function Element_Response_bond(eps_n,eps_t,eps_,E,sigma_N,sigma_T,sigma_eff,eps_pos_max,eps_neg_max,eps_n_max,eps_t_max,K_t,K_s,eps_vol,area, leng_th,el_disp,B)
         # ELEMENT_RESPONSE Calculate element nodal forces (Calls Constitutive Law)
             eps_n[2] = B.BN2'*el_disp[7:12]-B.BN1'*el_disp[1:6]; # Normal Strain
             eps_l = B.BL2'*el_disp[7:12]-B.BL1'*el_disp[1:6]; # Strain Parallel to l-axis
