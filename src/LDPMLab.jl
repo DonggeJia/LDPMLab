@@ -235,7 +235,7 @@ end
 
 
 #!use of package, units: mm, N, Mpa
-# imen1, dimen2, dimen3, va, da, d0, nF, magnifyp
+# #imen1, dimen2, dimen3, va, da, d0, nF, magnifyp
 # LDPM.geometry_parameters = [200, 200, 70, 0.734, 15, 10, 0.45, 1.1]
 
 # Particle_distribution(LDPM, "Yes", "../output examples/LDPM_geometry")
@@ -260,8 +260,11 @@ end
 # #0.0 # zeta -> damping coefficient
 # LDPM.mechanical_parameters = [45000.0, 45000.0, 3.0, -50.0, 10.0, 0.07, 0.35, 0.25, 2.0, 0.8, 2.5e-6, 1.0, 5.0, 11250.0, 0.0]
 
-# Solutions(LDPM, 1, 0.8) # Δt= round(2/median(ω_n),digits=5)
+# Solutions(LDPM, 1, 1.2) # Δt= round(2/median(ω_n),digits=5)
 # Post_process(LDPM, [0.4, 0.8, 1.0], "../output examples/cracking pattern", [[[90 110; 0 200; 0 10], [3]]], [[[90 110; 0 200; 60 70], [3]]], 300, "../output examples/200_200_70 deck", "Yes")
+
+
+
 
 # dimen1, dimen2, dimen3, va, da, d0, nF, magnifyp, height_S, diameter_S
 # LDPM_bar_reforced.geometry_parameters = [200, 200, 70, 0.734, 15, 10, 0.45, 1.1, 20.0, 16.0]

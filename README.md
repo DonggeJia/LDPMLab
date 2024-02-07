@@ -61,14 +61,14 @@ and you are ready to go.
 ### 2. Distribute particles in the material volume
 - for particle reinforced material
     ```
-    Particle_distribution(LDPM, "Yes", "D:/LDPM_geometry")
+    Particle_distribution(LDPM, "Yes", "../output examples/LDPM_geometry")
     ```
     where "Yes" means saving a JLD2 file with particle coordinates and their corresponding diameters. By default, `Yes` is used. Other strings except `Yes` means not storing the current particle distribution. Saving particle distribution is encouraged so that it can be used again whenever Julia session is restarted, excluding the influence of random particle distribution on solutions.
 
-    "D:/LDPM_geometry" indicates the filefolder and filename for particle distribution storage.
+    "../output examples/LDPM_geometry" indicates the filefolder and filename for particle distribution storage.
 - for particle reinforced material with reforcing bars
     ```
-    particle_distribution(LDPM_bar_reforced, "Yes", "D:/LDPM_geometry")
+    particle_distribution(LDPM_bar_reforced, "Yes", "../output examples/LDPM_geometry")
     ```
 A particle gradation curve will be generated after running this function, for example,
 
@@ -78,7 +78,7 @@ A particle gradation curve will be generated after running this function, for ex
 
 If particle distribution is stored, you can use
 ```
-@load "D:/LDPM_geometry.jld2"
+@load "../output examples/LDPM_geometry.jld2"
 ```
 to reload all the procedures you've done in steps 1 and 2.
 ### 3. Meshing
@@ -89,14 +89,14 @@ A demonstration of the procedure from particel distribution to Delauney tetrahed
 </p>
 - for particle reinforced material
     ```
-    Meshing(LDPM, "Yes", "D:/LDPM_mesh_facets")
+    Meshing(LDPM, "Yes", "../output examples/LDPM_mesh_facets")
     ```
     where "Yes" means save a vtk file for Paraview to plot the contact facets in the material volume. 
     
-    "D:/LDPM_mesh_facets" indicates the filefolder and filename for storage.
+    "../output examples/LDPM_mesh_facets" indicates the filefolder and filename for storage.
 - for particle reinforced material with reforcing bars
     ```
-    Meshing(LDPM_bar_reforced, "Yes", "D:/LDPM_mesh_facets")
+    Meshing(LDPM_bar_reforced, "Yes", "../output examples/LDPM_mesh_facets")
     ```
 The meshing plot for particle reinforced materials with reforcing bars is like
 <p align="center">
@@ -153,7 +153,7 @@ for particle reinforced materials with reforcing bars.
 After this step, you already get the solution. A further step helps to output results and plot beautiful cracking pattern.
 ### 7. Post process
     
-Post process uses a function `post_process(model_name, relative_time_of_cracking_=[0.4, 0.8, 1.0], crack_plot_dirc_and_name_="D:/cracking pattern", output_displacement_directions_=[[[90 110; 0 200; 0 10], [3]]], output_load_directions_=[[[90 110; 0 200; 60 70], [3]]], step_interval_=300, load_dis_out_name_="D:/200_200_70_deck", plot_dis_load_region_="Yes")`.
+Post process uses a function `post_process(model_name, relative_time_of_cracking_=[0.4, 0.8, 1.0], crack_plot_dirc_and_name_="../output examples/cracking pattern", output_displacement_directions_=[[[90 110; 0 200; 0 10], [3]]], output_load_directions_=[[[90 110; 0 200; 60 70], [3]]], step_interval_=300, load_dis_out_name_="../output examples/200_200_70_deck", plot_dis_load_region_="Yes")`.
 
 `model_name` should be `LDPM` for particle reinforced materials and `LDPM_bar_reforced` for particle reinforced materials with reforcing bars.
 

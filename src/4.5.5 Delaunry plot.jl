@@ -11,7 +11,7 @@ POINTS $(Int(gdl/6)) float")
 for i=1:Int(gdl/6)
 println(file, Positions[i,1], " ", Positions[i,2], " ", Positions[i,3])
 end
-println(file, "LINES $(length(Connect)) $(3*length(Connect))")
+println(file, "LINES $(size(Unique_Connections, 1) - size(steel_uniques, 1) - size(steel_bond_uniques, 1)) $(3*(size(Unique_Connections, 1) - size(steel_uniques, 1) - size(steel_bond_uniques, 1)))")
 for i=1:size(Unique_Connections, 1) - size(steel_uniques, 1) - size(steel_bond_uniques, 1)
   println(file, 2, " ", Connect[i].ID1-1, " ", Connect[i].ID2-1)
 end
