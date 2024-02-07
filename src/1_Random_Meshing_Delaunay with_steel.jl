@@ -28,7 +28,7 @@ for i in axes(TRI, 1)
             B111 = (poin3[1] - poin2[1])
             C = poin2[1] * poin3[2] - poin3[1] * poin2[2]
             t = dot(poin1-poin2,poin3-poin2)/dot(poin3-poin2,poin3-poin2)
-            if 0<t<1 && (abs(A * poin1[1] + B111 * poin1[2] + C) / sqrt(A^2 + B111^2)) < diameter_S / 2
+            if 0<t<1 && (abs(A * poin1[1] + B111 * poin1[2] + C) / sqrt(A^2 + B111^2)) < diameter_S / 4 #!control the hollow size where steel go through
                 append!(eliminate_TRI, i)
                 @goto next_tetrahe
             end

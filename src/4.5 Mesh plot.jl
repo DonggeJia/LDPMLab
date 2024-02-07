@@ -4,8 +4,6 @@ Unique_Connections_Triangles = Unique_Connections_Elements
 function mesh_plot_f(filename::String)
     w = zeros(size(Unique_Connections_Triangles, 1) - (length(steel_uniques) + length(steel_bond_uniques)))
 
-
-
     num_cel = zeros(size(Unique_Connections_Triangles, 1) - (length(steel_uniques) + length(steel_bond_uniques)), 1)
     for i = 1:size(Unique_Connections_Triangles, 1)-(length(steel_uniques)+length(steel_bond_uniques))
         num_cel[i, 1] = Int64(size(Unique_Connections_Triangles[i].Non_Projected, 1))

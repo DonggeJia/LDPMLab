@@ -1,6 +1,8 @@
 
 function mesh_plot_steel(filename)
-file = open("$filename steels.vtk", "w")
+
+file0 = string(filename, "steels.vtk")
+file = open(file0, "w")
 
 println(
     file,
@@ -27,6 +29,7 @@ end
 close(file)
 
 end
+
 mesh_plot_steel(filename)
 #run(`paraview /vtk_files/encastre_deck_$(steps[1]).vtk`)
 

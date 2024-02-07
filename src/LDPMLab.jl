@@ -20,7 +20,7 @@ using GeometryBasics
 
 mutable struct ldpm
     geometry_parameters::Array{Float64,1}                                                 # Projected Elements composing the connection
-    #Non_Projected::Array{Float64,2}                                             # Non-projected Elements composing the connection
+    #Non_Projecte../output examples:Array{Float64,2}                                             # Non-projected Elements composing the connection
     mechanical_parameters::Array{Float64,1}                                                                  # ID of first node of the strut
     #delta_t::Float64                                                                  # ID of second node of the strut
     #Tet::Vector{Int64}                                                          # ID of tetrahedron
@@ -31,7 +31,7 @@ LDPM = ldpm([0, 0.0], [0, 0.0])
 
 mutable struct ldpmbarr
     geometry_parameters::Array{Float64,1}                                                 # Projected Elements composing the connection
-    #Non_Projected::Array{Float64,2}                                             # Non-projected Elements composing the connection
+    #Non_Projecte../output examples:Array{Float64,2}                                             # Non-projected Elements composing the connection
     steel_layout::Array{Float64,1}
     mechanical_parameters::Array{Float64,1}                                                                  # ID of first node of the strut
     #delta_t::Float64                                                                  # ID of second node of the strut
@@ -84,7 +84,7 @@ Excute particle distribution in material volume and save the data of particle di
 - `particle_save` -- symbol describing wether saving particle distribution
     - `:Yes` -- save a JLD2 file with particle coordinates and their corresponding diameters. By default, `:Yes` is used. Other strings except `Yes` means not storing the current particle distribution.
     Saving particle distribution is encouraged so that the following solutions can use the same model mesh, excluding the influence of meshing on solutions.
-- `particle_dirc_and_name` -- a string indicating the filefolder and filename saving particle distribution. By default, `LDPM_particle_distribution`  is used. This argument can be `D:/Juliafiles/LDPM_particle_distribution` as well.
+- `particle_dirc_and_name` -- a string indicating the filefolder and filename saving particle distribution. By default, `LDPM_particle_distribution`  is used. This argument can be `../output examples/Juliafiles/LDPM_particle_distribution` as well.
 
 """
 function Particle_distribution(model_name, particle_save="Yes", particle_dirc_and_name="LDPM_particle_distribution")
@@ -122,7 +122,9 @@ function Meshing(model_name, mesh_plot="Yes", mesh_dirc_and_name="LDPM_mesh_face
         include("3_Projected_Areas.jl") # Compute Areas of Triangles Composing Every Connection
         include("4_Connectivity_Matrix.jl") # Evaluate Connections Between Particles
         if mesh_plot == "Yes"
+            global filename = mesh_dirc_and_name
             include("4.5 Mesh plot.jl")
+            include("4.5.5 Delaunry plot.jl")
         end
     elseif typeof(model_name) == ldpmbarr
         include("1_Random_Meshing_Delaunay with_steel.jl")
@@ -132,6 +134,7 @@ function Meshing(model_name, mesh_plot="Yes", mesh_dirc_and_name="LDPM_mesh_face
         if mesh_plot == "Yes"
             global filename = mesh_dirc_and_name
             include("4.5 Mesh plot.jl")
+            include("4.5.5 Delaunry plot.jl")
             include("4.6 Steel plot.jl")
         end
     end
@@ -207,7 +210,7 @@ global load_dis_out_name = "0"
 global plot_dis_load_region = "Yes"
 global gdl = 1
 
-function post_process(model_name, relative_time_of_cracking_=[0.4, 0.8, 1.0], crack_plot_dirc_and_name_="D:/cracking pattern", output_displacement_directions_=[[[90 110; 0 200; 0 10], [3]]], output_load_directions_=[[[90 110; 0 200; 60 70], [3]]], step_interval_=300, load_dis_out_name_="200*200*70 deck", plot_dis_load_region_="Yes")
+function Post_process(model_name, relative_time_of_cracking_=[0.4, 0.8, 1.0], crack_plot_dirc_and_name_="../output examples/cracking pattern", output_displacement_directions_=[[[90 110; 0 200; 0 10], [3]]], output_load_directions_=[[[90 110; 0 200; 60 70], [3]]], step_interval_=300, load_dis_out_name_="200*200*70 deck", plot_dis_load_region_="Yes")
     global relative_time_of_cracking = relative_time_of_cracking_
     global crack_plot_dirc_and_name = crack_plot_dirc_and_name_
     global output_displacement_directions = output_displacement_directions_
@@ -226,7 +229,7 @@ function post_process(model_name, relative_time_of_cracking_=[0.4, 0.8, 1.0], cr
 
 end
 
-export Particle_distribution, Meshing, Boundary_setting, Solutions, post_process,
+export Particle_distribution, Meshing, Boundary_setting, Solutions, Post_process,
     LDPM, LDPM_bar_reforced
 end
 
@@ -235,9 +238,9 @@ end
 # imen1, dimen2, dimen3, va, da, d0, nF, magnifyp
 # LDPM.geometry_parameters = [200, 200, 70, 0.734, 15, 10, 0.45, 1.1]
 
-# Particle_distribution(LDPM, "Yes", "D:/LDPM_geometry")
-# #@load "D:/LDPM_geometry.jld2"
-# Meshing(LDPM, "Yes", "D:/LDPM_mesh_facets")
+# Particle_distribution(LDPM, "Yes", "../output examples/LDPM_geometry")
+# #@load "../output examples/LDPM_geometry.jld2"
+# Meshing(LDPM, "Yes", "../output examples/LDPM_mesh_facets")
 # Boundary_setting([[[0 10; 0 200; 0 10], [1, 2, 3, 4, 5, 6], [0, 0, 0, 0, 0, 0]], [[190 200; 0 200; 0 10], [1, 2, 3], [0, 0, 0]], [[95 105; 0 200; 60 70], [3], [-0.2]]], "Yes")
 
 # #45000.0 # E_m -> Initial Elastic Modulus for the Matrix [MPa]
@@ -258,18 +261,16 @@ end
 # LDPM.mechanical_parameters = [45000.0, 45000.0, 3.0, -50.0, 10.0, 0.07, 0.35, 0.25, 2.0, 0.8, 2.5e-6, 1.0, 5.0, 11250.0, 0.0]
 
 # Solutions(LDPM, 1, 0.8) # Δt= round(2/median(ω_n),digits=5)
-# post_process(LDPM, [0.4, 0.8, 1.0], "D:/cracking pattern", [[[90 110; 0 200; 0 10], [3]]], [[[90 110; 0 200; 60 70], [3]]], 300, "D:/200_200_70 deck", "Yes")
-
-
+# Post_process(LDPM, [0.4, 0.8, 1.0], "../output examples/cracking pattern", [[[90 110; 0 200; 0 10], [3]]], [[[90 110; 0 200; 60 70], [3]]], 300, "../output examples/200_200_70 deck", "Yes")
 
 # dimen1, dimen2, dimen3, va, da, d0, nF, magnifyp, height_S, diameter_S
 # LDPM_bar_reforced.geometry_parameters = [200, 200, 70, 0.734, 15, 10, 0.45, 1.1, 20.0, 16.0]
 # #traverse_distribution 
 # LDPM_bar_reforced.steel_layout = [50, 100, 150]
 
-# Particle_distribution(LDPM_bar_reforced, "Yes", "D:/LDPM_geometry")
-# #@load "D:/LDPM_geometry.jld2"
-# Meshing(LDPM_bar_reforced, "Yes", "D:/LDPM_mesh_facets")
+# Particle_distribution(LDPM_bar_reforced, "Yes", "../output examples/LDPM_geometry")
+# #@load "../output examples/LDPM_geometry.jld2"
+# Meshing(LDPM_bar_reforced, "Yes", "../output examples/LDPM_mesh_facets")
 # Boundary_setting([[[0 10; 0 200; 0 10], [1, 2, 3, 4, 5, 6], [0, 0, 0, 0, 0, 0]], [[190 200; 0 200; 0 10], [1, 2, 3], [0, 0, 0]], [[95 105; 0 200; 60 70], [3], [-0.2]]], "Yes")
 # #add steel mechanical parameters
 # #E_steel = 1.96*10.0^5
@@ -279,4 +280,4 @@ end
 # LDPM_bar_reforced.mechanical_parameters = [45000.0, 45000.0, 3.0, -50.0, 10.0, 0.07, 0.35, 0.25, 2.0, 0.8, 2.5e-6, 1.0, 5.0, 11250.0, 0.0, 1.96 * 10^5, 500, 0.02, 833.33]
 
 # Solutions(LDPM_bar_reforced, 0.2, 0.3) # Δt= round(2/median(ω_n),digits=5)
-# post_process(LDPM_bar_reforced, [0.4, 0.8, 1.0], "D:/cracking pattern", [[[90 110; 0 200; 0 10], [3]]], [[[90 110; 0 200; 60 70], [3]]], 300, "D:/200_200_70 deck", "Yes")
+# Post_process(LDPM_bar_reforced, [0.4, 0.8, 1.0], "../output examples/cracking pattern", [[[90 110; 0 200; 0 10], [3]]], [[[90 110; 0 200; 60 70], [3]]], 300, "../output examples/200_200_70 deck", "Yes")
