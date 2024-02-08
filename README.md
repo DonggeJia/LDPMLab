@@ -23,7 +23,7 @@
 
 # Features
 - Easy to use.
-- Both static and dynamic solution strategies are incorporated. Generally, the dynamic solution is recommended for its guaranteed convergence. Static solution is more accurate for quasi-satitic performance, but may have difficulty in convergence for models with complicated constitutive laws or meshing 
+- Both static and dynamic solution strategies are incorporated. Generally, the dynamic solution is recommended for its guaranteed convergence. Static solution is more accurate for quasi-satitic behaviors, but may have difficulty in convergence for models with complicated constitutive laws or meshing 
 - Strict implimentation of random particle distribution and distance check between adjacent particles
 - Output files can be viewed in [Paraview](https://www.paraview.org/) and CSV readers
 
