@@ -1,5 +1,6 @@
-![](docs/src/icon_for_LDPMLab.png)
-
+<p align="center">
+    <img src="docs/src/icon_for_LDPMLab.png" width="350"/>
+</p>
 [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://donggejia.github.io/LDPMLab/dev/)
 
 - LDPMLab, is a integral, open-source and high-performance Julia package for the state of the art of Lattice discrete particle model (LDPM), first inovated by Prof. Cusatis of Northwestern in 2011. 
