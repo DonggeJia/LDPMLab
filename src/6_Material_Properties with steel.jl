@@ -124,7 +124,7 @@ function MassScaling(Tet_Mass, Tet_Stiffness, TRI)
         println("Maximum frequency is ", maximum(ω_n), ".")
         println("Average frequency is ", mean(ω_n), ".")
         println("Median frequency is ", median(ω_n), ". Corresponding Δt is ", 2/median(ω_n), ".")
-        println("Input desired Δt to be used for mass scaling:")
+        #println("Input desired Δt to be used for mass scaling:")
         # s = readline()               ### input a number here
         # Δt = parse(Float64, chomp(s));
         Δt= round(2/median(ω_n),digits=5);

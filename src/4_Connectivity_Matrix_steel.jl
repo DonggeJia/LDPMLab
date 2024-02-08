@@ -1,10 +1,10 @@
 
 ## Steel_steel element and steel_concrete_bond element
-steel_uniques_ini = [[[i, i+1] for i = 1:length(nodes_S_total[1])-1]; [[i, i+1] for i = length(nodes_S_total[1])+1:length(nodes_S_total[1])+length(nodes_S_total[2])-1]; [[i, i+1] for i = length(nodes_S_total[1])+length(nodes_S_total[2])+1:length(nodes_S_total[1])+length(nodes_S_total[2])+ length(nodes_S_total[3])-1]]
+steel_uniques_ini = [[[i, i + 1] for i = 1:length(nodes_S_total[1])-1]; [[i, i + 1] for i = length(nodes_S_total[1])+1:length(nodes_S_total[1])+length(nodes_S_total[2])-1]; [[i, i + 1] for i = length(nodes_S_total[1])+length(nodes_S_total[2])+1:length(nodes_S_total[1])+length(nodes_S_total[2])+length(nodes_S_total[3])-1]]
 
 global steel_uniques = [steel_uniques_ini[i] + [n_nodes, n_nodes] for i in eachindex(steel_uniques_ini)]
 
-global steel_bond_uniques = [[i+n_nodes, nodes_surround_steel_sequence[i]] for i in eachindex(nodes_surround_steel_sequence)]
+global steel_bond_uniques = [[i + n_nodes, nodes_surround_steel_sequence[i]] for i in eachindex(nodes_surround_steel_sequence)]
 
 steel_uniques_ma = mapreduce(permutedims, vcat, steel_uniques)
 steel_bond_uniques_ma = mapreduce(permutedims, vcat, steel_bond_uniques)
@@ -13,11 +13,11 @@ steel_bond_uniques_ma = mapreduce(permutedims, vcat, steel_bond_uniques)
 len_steel_bond = []
 for j = 1:length(traverse_distribution)
 
-append!(len_steel_bond, (norm(nodes_S_total[j][1]-nodes_S_total[j][2])/2+norm(nodes_S_total[j][1]-[0, traverse_distribution[j], height_S])))
-for i = 2:length(nodes_S_total[j])-1
-append!(len_steel_bond, (norm(nodes_S_total[j][i]-nodes_S_total[j][i+1])+norm(nodes_S_total[j][i]-nodes_S_total[j][i-1]))/2)
-end
-append!(len_steel_bond, (norm(nodes_S_total[j][length(nodes_S_total[j])-1]-nodes_S_total[j][length(nodes_S_total[j])])/2+norm(nodes_S_total[j][length(nodes_S_total[j])]-[dimen1, traverse_distribution[j], height_S])))
+    append!(len_steel_bond, (norm(nodes_S_total[j][1] - nodes_S_total[j][2]) / 2 + norm(nodes_S_total[j][1] - [0, traverse_distribution[j], height_S])))
+    for i = 2:length(nodes_S_total[j])-1
+        append!(len_steel_bond, (norm(nodes_S_total[j][i] - nodes_S_total[j][i+1]) + norm(nodes_S_total[j][i] - nodes_S_total[j][i-1])) / 2)
+    end
+    append!(len_steel_bond, (norm(nodes_S_total[j][length(nodes_S_total[j])-1] - nodes_S_total[j][length(nodes_S_total[j])]) / 2 + norm(nodes_S_total[j][length(nodes_S_total[j])] - [dimen1, traverse_distribution[j], height_S])))
 end
 # Evaluation of the Connectivity Matrix
 struct UniqueElementsStructure
@@ -137,7 +137,7 @@ function Build_Connect(Elements, Positions, Size)
             end                                                            # Diameter of the 2nd Aggregate
             len_agg = len / 3 * 2                                                # Total Length of Aggregate Included in the Strut
             len_m = len / 3                                                      # Effective Matrix Length
-            Connection_Area = len_steel_bond[i - size(Unique_Connections, 1) - size(steel_uniques, 1)] * pi * diameter_S
+            Connection_Area = len_steel_bond[i-size(Unique_Connections, 1)-size(steel_uniques, 1)] * pi * diameter_S
             uv_1 = (B - A) / norm(B - A)                                                     # Unit Vector normal to the strut
             if uv_1[3] == 0 && uv_1[1] == uv_1[2]                                      # Choose between the two previously defined vectors
                 perp = [uv_1[2] - uv_1[3], uv_1[1], uv_1[1]]

@@ -2,7 +2,7 @@
 #  Units mm/sec/N/MPa/ton
 # Analysis Settings
 function Central_Difference_Integration(t_final, nel1, Δt)
-    #
+    println("Δt is ", Δt)
     # Calculated Parameters
     n_inc = Int64(ceil(t_final / Δt)) # Number of Total Increments
     rampth = ones(n_inc) # Initialize Rampth Function used to apply the external imposed displacements gradually

@@ -55,7 +55,7 @@ function vtk_cracks(sigma_n, sigma_t, epsilon_n, epsilon_t, E, α, Unique_Connec
         num_cel[i,1] = Int64(8);
     end
     for i=size(Unique_Connections_Triangles,1)-(length(steel_bond_uniques))+1:size(Unique_Connections_Triangles,1)#(length(steel_uniques) + length(steel_bond_uniques))
-        num_cel[i,1] = Int64(5);
+        num_cel[i,1] = Int64(8);
     end
     num_triangles = Int64(sum(num_cel));
     num_points = 3*num_triangles;
@@ -81,7 +81,7 @@ function vtk_cracks(sigma_n, sigma_t, epsilon_n, epsilon_t, E, α, Unique_Connec
     for mm = 1:size(steps,1)
         ii = steps[mm]
 
-        file = string(filename,"_", ii, ".vtk")
+        file = string(filename,"_", ii, "_steel.vtk")
         open(file, "w") do f
             write(f, "# vtk DataFile Version 4.0 \n")
             write(f, "Unstructured grid legacy vtk file with point scalar data \n")
@@ -100,34 +100,33 @@ function vtk_cracks(sigma_n, sigma_t, epsilon_n, epsilon_t, E, α, Unique_Connec
                 write(f,   "$(Unique_Connections_Triangles[jj].Non_Projected[kk,7]) $(Unique_Connections_Triangles[jj].Non_Projected[kk,8]) $(Unique_Connections_Triangles[jj].Non_Projected[kk,9]) \n")
                 end
             end
-
             for jj = size(Unique_Connections_Triangles,1)-(length(steel_uniques) + length(steel_bond_uniques))+1:size(Unique_Connections_Triangles,1)-(length(steel_bond_uniques))
-                contact_surface=[Connect[jj].Centroid Connect[jj].Centroid+[0,-diameter_S/2,0] Connect[jj].Centroid+[0,-diameter_S/2/sqrt(2),-diameter_S/2/sqrt(2)];
-                Connect[jj].Centroid Connect[jj].Centroid+[0,-diameter_S/2,0] Connect[jj].Centroid+[0,-diameter_S/2/sqrt(2),diameter_S/2/sqrt(2)];
-                Connect[jj].Centroid Connect[jj].Centroid+[0,diameter_S/2,0] Connect[jj].Centroid+[0,diameter_S/2/sqrt(2),-diameter_S/2/sqrt(2)];
-                Connect[jj].Centroid Connect[jj].Centroid+[0,diameter_S/2,0] Connect[jj].Centroid+[0,diameter_S/2/sqrt(2),diameter_S/2/sqrt(2)];
-                Connect[jj].Centroid Connect[jj].Centroid+[0,0,-diameter_S/2] Connect[jj].Centroid+[0,-diameter_S/2/sqrt(2),-diameter_S/2/sqrt(2)];
-                Connect[jj].Centroid Connect[jj].Centroid+[0,0,-diameter_S/2] Connect[jj].Centroid+[0,diameter_S/2/sqrt(2),-diameter_S/2/sqrt(2)];
-                Connect[jj].Centroid Connect[jj].Centroid+[0,0,diameter_S/2] Connect[jj].Centroid+[0,-diameter_S/2/sqrt(2),diameter_S/2/sqrt(2)];
-                Connect[jj].Centroid Connect[jj].Centroid+[0,0,diameter_S/2] Connect[jj].Centroid+[0,diameter_S/2/sqrt(2),diameter_S/2/sqrt(2)]]
+                contact_surface=[[Connect[jj].Centroid, Connect[jj].Centroid+[0,-diameter_S/2,0], Connect[jj].Centroid+[0,-diameter_S/2/sqrt(2),-diameter_S/2/sqrt(2)]];
+                [Connect[jj].Centroid, Connect[jj].Centroid+[0,-diameter_S/2,0], Connect[jj].Centroid+[0,-diameter_S/2/sqrt(2),diameter_S/2/sqrt(2)]];
+                [Connect[jj].Centroid, Connect[jj].Centroid+[0,diameter_S/2,0], Connect[jj].Centroid+[0,diameter_S/2/sqrt(2),-diameter_S/2/sqrt(2)]];
+                [Connect[jj].Centroid, Connect[jj].Centroid+[0,diameter_S/2,0], Connect[jj].Centroid+[0,diameter_S/2/sqrt(2),diameter_S/2/sqrt(2)]];
+                [Connect[jj].Centroid, Connect[jj].Centroid+[0,0,-diameter_S/2], Connect[jj].Centroid+[0,-diameter_S/2/sqrt(2),-diameter_S/2/sqrt(2)]];
+                [Connect[jj].Centroid, Connect[jj].Centroid+[0,0,-diameter_S/2], Connect[jj].Centroid+[0,diameter_S/2/sqrt(2),-diameter_S/2/sqrt(2)]];
+                [Connect[jj].Centroid, Connect[jj].Centroid+[0,0,diameter_S/2], Connect[jj].Centroid+[0,-diameter_S/2/sqrt(2),diameter_S/2/sqrt(2)]];
+                [Connect[jj].Centroid, Connect[jj].Centroid+[0,0,diameter_S/2], Connect[jj].Centroid+[0,diameter_S/2/sqrt(2),diameter_S/2/sqrt(2)]]]
                 for kk=1:24
-                 write(f,   "$contact_surface[kk,1] $contact_surface[kk,2] $contact_surface[kk,3] \n")
+                 write(f,   "$(contact_surface[kk][1]) $(contact_surface[kk][2]) $(contact_surface[kk][3]) \n")
                 #  write(f,   "$(Unique_Connections_Triangles[jj].Non_Projected[kk,4]) $(Unique_Connections_Triangles[jj].Non_Projected[kk,5]) $(Unique_Connections_Triangles[jj].Non_Projected[kk,6]) \n")
                 #  write(f,   "$(Unique_Connections_Triangles[3].Non_Projected[kk,7]) $(Unique_Connections_Triangles[jj].Non_Projected[kk,8]) $(Unique_Connections_Triangles[jj].Non_Projected[kk,9]) \n")
                  end
              end
 
              for jj = size(Unique_Connections_Triangles,1)-(length(steel_bond_uniques))+1:size(Unique_Connections_Triangles,1)
-                contact_surface=[Connect[jj].Centroid Connect[jj].Centroid+[0,-diameter_S/20,0] Connect[jj].Centroid+[-diameter_S/20/sqrt(2),-diameter_S/20/sqrt(2),0];
-                Connect[jj].Centroid Connect[jj].Centroid+[0,-diameter_S/20,0] Connect[jj].Centroid+[diameter_S/20/sqrt(2),-diameter_S/20/sqrt(2),0];
-                Connect[jj].Centroid Connect[jj].Centroid+[0,diameter_S/20,0] Connect[jj].Centroid+[-diameter_S/20/sqrt(2),diameter_S/20/sqrt(2),0];
-                Connect[jj].Centroid Connect[jj].Centroid+[0,diameter_S/20,0] Connect[jj].Centroid+[diameter_S/20/sqrt(2),diameter_S/20/sqrt(2),0];
-                Connect[jj].Centroid Connect[jj].Centroid+[-diameter_S/20,0,0] Connect[jj].Centroid+[-diameter_S/20/sqrt(2),-diameter_S/20/sqrt(2),0];
-                Connect[jj].Centroid Connect[jj].Centroid+[-diameter_S/20,0,0] Connect[jj].Centroid+[-diameter_S/20/sqrt(2),diameter_S/20/sqrt(2),0];
-                Connect[jj].Centroid Connect[jj].Centroid+[diameter_S/20,0,0] Connect[jj].Centroid+[diameter_S/20/sqrt(2),-diameter_S/20/sqrt(2),0];
-                Connect[jj].Centroid Connect[jj].Centroid+[diameter_S/20,0,0] Connect[jj].Centroid+[diameter_S/20/sqrt(2),diameter_S/20/sqrt(2),0]]
+                contact_surface=[[Connect[jj].Centroid, Connect[jj].Centroid+[0,-diameter_S/2,0], Connect[jj].Centroid+[-diameter_S/2/sqrt(2),-diameter_S/2/sqrt(2),0]];
+                [Connect[jj].Centroid, Connect[jj].Centroid+[0,-diameter_S/2,0], Connect[jj].Centroid+[diameter_S/2/sqrt(2),-diameter_S/2/sqrt(2),0]];
+                [Connect[jj].Centroid, Connect[jj].Centroid+[0,diameter_S/2,0], Connect[jj].Centroid+[-diameter_S/2/sqrt(2),diameter_S/2/sqrt(2),0]];
+                [Connect[jj].Centroid, Connect[jj].Centroid+[0,diameter_S/2,0], Connect[jj].Centroid+[diameter_S/2/sqrt(2),diameter_S/2/sqrt(2),0]];
+                [Connect[jj].Centroid, Connect[jj].Centroid+[-diameter_S/2,0,0], Connect[jj].Centroid+[-diameter_S/2/sqrt(2),-diameter_S/2/sqrt(2),0]];
+                [Connect[jj].Centroid, Connect[jj].Centroid+[-diameter_S/2,0,0], Connect[jj].Centroid+[-diameter_S/2/sqrt(2),diameter_S/2/sqrt(2),0]];
+                [Connect[jj].Centroid, Connect[jj].Centroid+[diameter_S/2,0,0], Connect[jj].Centroid+[diameter_S/2/sqrt(2),-diameter_S/2/sqrt(2),0]];
+                [Connect[jj].Centroid, Connect[jj].Centroid+[diameter_S/2,0,0], Connect[jj].Centroid+[diameter_S/2/sqrt(2),diameter_S/2/sqrt(2),0]]]
                 for kk=1:24
-                    write(f,   "$contact_surface[kk,1] $contact_surface[kk,2] $contact_surface[kk,3] \n")
+                    write(f,   "$(contact_surface[kk][1]) $(contact_surface[kk][2]) $(contact_surface[kk][3]) \n")
                 end
              end
 
@@ -148,13 +147,22 @@ function vtk_cracks(sigma_n, sigma_t, epsilon_n, epsilon_t, E, α, Unique_Connec
             write(f, "CELL_DATA  $num_triangles\n")            
             write(f, "SCALARS crack_openings double\n")                
             write(f, "LOOKUP_TABLE default\n") 
-            for jj = 1:size(Unique_Connections_Triangles,1)
+            for jj = 1:size(Unique_Connections_Triangles,1)-(length(steel_uniques) + length(steel_bond_uniques))
                for k=1:Int64(num_cel[jj,1])
                 write(f, "$(w[jj,ii]) \n")                
                end
             end
-
-
+            for jj = size(Unique_Connections_Triangles,1)-(length(steel_uniques) + length(steel_bond_uniques))+1:size(Unique_Connections_Triangles,1)-(length(steel_bond_uniques))
+                for k=1:Int64(num_cel[jj,1])
+                 write(f, "$(w[jj,ii]) \n")                
+                end
+             end
+             
+             for jj = size(Unique_Connections_Triangles,1)-(length(steel_bond_uniques))+1:size(Unique_Connections_Triangles,1)
+                for k=1:Int64(num_cel[jj,1])
+                 write(f, "$(w[jj,ii]) \n")                
+                end
+             end
         end
 
     end
