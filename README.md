@@ -1,5 +1,5 @@
 <p align="left">
-    <img src="docs/src/icon_for_LDPMLab.png" width="350"/>
+    <img src="docs/src/icon_for_LDPMLab.png" width="450"/>
 </p>
 - LDPMLab, is a integral, open-source and high-performance Julia package for the state of the art of Lattice discrete particle model (LDPM), first inovated by Prof. Cusatis of Northwestern in 2011. 
 
@@ -182,7 +182,10 @@ The cracking pattern for particle reinforced materials in Paraview is like
 <p align="center">
     <img src="docs/src/cracking and dis_load output.png" width="750"/>
 </p>
-
+The cracking pattern and steel stress distribution for particle reinforced materials with reinforcing bar is like
+<p align="center">
+    <img src="docs/src/Steel reinforced deck.png" width="750"/>
+</p>
 Notice that Paraview has rich functionality in beautifying plots.
 
 ## References
