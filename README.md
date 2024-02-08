@@ -1,4 +1,4 @@
-![](docs/src/assets/logo-text.svg)
+![](docs/src/icon for LDPM.png)
 
 [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://donggejia.github.io/LDPMLab/dev/)
 
