@@ -6,3 +6,4 @@ using Test
 
     @test typeof(LDPM.geometry_parameters) == Vector{Float64}
 end
+
