@@ -73,7 +73,7 @@ and you are ready to go.
 A particle gradation curve will be generated after running this function, for example,
 
 <p align="center">
-    <img src="docs/src/particle size generation.png" width="350"/>
+    <img src="docs/src/particle size generation.png" width="550"/>
 </p>
 
 If particle distribution is stored, you can use
