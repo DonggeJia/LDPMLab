@@ -186,7 +186,7 @@ The cracking pattern for particle-reinforced materials in Paraview is like:
 </p>
 The splitting failure of concrete after the steel is pulled out is like:
 <p align="center">
-    <img src="docs/src/concrete cracking after steel peeling out.png" width="750"/>
+    <img src="docs/src/concrete cracking after steel peeling out.png" width="450"/>
 </p>
 Notice that Paraview has rich functionality in beautifying plots.
 
