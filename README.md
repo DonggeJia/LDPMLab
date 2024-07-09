@@ -63,9 +63,9 @@ and you are ready to go.
     ```
     Particle_distribution(LDPM, "Yes", "../output examples/LDPM_geometry")
     ```
-    Where "Yes" means saving a JLD2 file with particle coordinates and their corresponding diameters. By default, `Yes` is used. Other strings except `Yes` mean not storing the current particle distribution. Saving particle distribution is encouraged so that it can be used again whenever the Julia session is restarted, excluding the influence of random particle distribution on solutions.
+    Where `Yes` means saving a JLD2 file with particle coordinates and their corresponding diameters. By default, `Yes` is used. Other strings except `Yes` mean not storing the current particle distribution. Saving particle distribution is encouraged so that it can be used again whenever the Julia session is restarted, excluding the influence of random particle distribution on solutions.
 
-    "../output examples/LDPM_geometry" indicates the file folder and filename for particle distribution storage.
+    `../output examples/LDPM_geometry` indicates the file folder and filename for particle distribution storage.
 - For particle-reinforced material with reinforcing bars:
     ```
     particle_distribution(LDPM_bar_reforced, "Yes", "../output examples/LDPM_geometry")
@@ -92,9 +92,9 @@ A demonstration of the procedure from particle distribution to Delaunay tetrahed
     ```
     Meshing(LDPM, "Yes", "../output examples/LDPM_mesh_facets")
     ```
-    Where "Yes" means saving a vtk file for Paraview to plot the contact facets in the material volume. 
+    Where `Yes` means saving a vtk file for Paraview to plot the contact facets in the material volume. 
     
-    "../output examples/LDPM_mesh_facets" indicates the file folder and filename for storage.
+    `../output examples/LDPM_mesh_facets` indicates the file folder and filename for storage.
 - For particle-reinforced material with reinforcing bars:
     ```
     Meshing(LDPM_bar_reforced, "Yes", "../output examples/LDPM_mesh_facets")
