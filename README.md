@@ -110,18 +110,17 @@ The meshing plot for particle-reinforced materials with reinforcing bars is like
 Setting boundaries requires running a function:
 `Boundary_setting(loaded_region, plot_boundary)`
 
-`loaded_region` is a variable receiving the information of displacement-controlled boundaries. The expected input is a three-layer nested vector. The first layer is `[the first boundary, the second boundary, ..., the last boundary]`. Each boundary is a vector `[Boundary condition region, freedom degrees that boundary applied on boundary nodes, displacement velocities on these boundary freedom degrees]`. `Boundary condition region` is a $3 \times 2$ matrix where the first row indicates the boundary region in the x-coordinate that `Boundary condition region[1,1]` is the starting place (mm) and 
-
-`Boundary condition region[1,2]` is the ending place (mm), the second row indicates the boundary region in the y-coordinate, and the third row indicates the boundary region in the z-coordinate. The unit of `displacement velocities on these boundary freedom degrees` is mm/second.
+`loaded_region` is a variable receiving the information of displacement-controlled boundaries. The expected input is a three-layer nested vector. The first layer is `[the first boundary, the second boundary, ..., the last boundary]`. Each boundary is a vector `[Boundary condition region, freedom degrees that boundary applied on boundary nodes, displacement velocities on these boundary freedom degrees]`. `Boundary condition region` is a $3 \times 2$ matrix where the first row indicates the boundary region in the x-coordinate that `Boundary condition region[1,1]` is the starting place (mm) and `Boundary condition region[1,2]` is the ending place (mm), the second row indicates the boundary region in the y-coordinate, and the third row indicates the boundary region in the z-coordinate. The unit of `displacement velocities on these boundary freedom degrees` is mm/second.
 
 For example,
 ```
 Boundary_setting([[[0 10; 0 200; 0 10], [1, 2, 3, 4, 5, 6], [0, 0, 0, 0, 0, 0]], [[190 200; 0 200; 0 10], [1, 2, 3], [0, 0, 0]], [[95 105; 0 200; 60 70], [3], [-0.2]]], "Yes")
 ```
-"Yes" means the boundary will be plotted, other values for this parameter mean no plot. The plot is like:
+`Yes` means the boundary will be plotted, other values for this parameter mean no plot. The plot is like:
 <p align="center">
     <img src="docs/src/boundary setting.png" width="450"/>
 </p>
+
 The boundary conditions are marked on each point with a format `local_freedom_degree_velocity`. Each point will have at most 6 marks for freedom degrees in x-direction movement, y-direction movement, z-direction movement, rotation about the x-axis, rotation about the y-axis, and rotation about the z-axis.
 
 ### 5. Specify Mechanical Parameters for an LDPM Model
@@ -155,7 +154,7 @@ for particle-reinforced materials with reinforcing bars.
 After this step, you already get the solution. A further step helps to output results and plot beautiful cracking patterns.
 ### 7. Post-process
     
-Post-process uses a function `post_process(model_name, relative_time_of_cracking_=[0.4, 0.8, 1.0], crack_plot_dirc_and_name_="../output examples/cracking pattern", output_displacement_directions_=[[[90 110; 0 200; 0 10], [3]]], output_load_directions_=[[[90 110; 0 200; 60 70], [3]]], step_interval_=300, load_dis_out_name_="../output examples/200_200_70_deck", plot_dis_load_region_="Yes")`.
+Post-process uses a function like `post_process(model_name, relative_time_of_cracking_=[0.4, 0.8, 1.0], crack_plot_dirc_and_name_="../output examples/cracking pattern", output_displacement_directions_=[[[90 110; 0 200; 0 10], [3]]], output_load_directions_=[[[90 110; 0 200; 60 70], [3]]], step_interval_=300, load_dis_out_name_="../output examples/200_200_70_deck", plot_dis_load_region_="Yes")`.
 
 `model_name` should be `LDPM` for particle-reinforced materials and `LDPM_bar_reforced` for particle-reinforced materials with reinforcing bars.
 
@@ -166,10 +165,11 @@ This function enables you to output cracking data as vtk files at different time
 `output_displacement_directions_` is a three-layer nested vector. The first layer is `[the first region for displacement output, the second region for displacement output, ..., the last region for displacement output]`. Each region is a vector `[regional range, freedom degrees that output]`. `regional range` is a $3 \times 2$ matrix where the first row indicates the range of the region in x-coordinate that `regional range[1,1]` is the starting place (mm) and `regional range[1,2]` is the ending place (mm), the second row indicates the range of the region in y-coordinate, and the third row indicates the range of the region in z-coordinate. 
 
 `output_load_directions_` has the same data structure as `output_displacement_directions_`, but the output is residual load values.
-If `plot_dis_load_region` is given a "Yes", the regions for displacement and load output will be plotted like:
+If `plot_dis_load_region` is given a `Yes`, the regions for displacement and load output will be plotted like:
 <p align="center">
     <img src="docs/src/data ouput regions.png" width="450"/>
 </p>
+
 The points that outputted data comes from have a 6-number string representing 6 degrees of freedom in sequence. `1` means the displacement data is extracted, `2` means the residual load data is extracted, and `3` means both displacement and residual load data are drawn.
 
 `step_interval_` claims the value of step interval that the output data will be thinned out so that the displacement and residual load will be extracted every `step_interval_` time step. 
@@ -185,10 +185,12 @@ The cracking pattern for particle-reinforced materials in Paraview is like:
 <p align="center">
     <img src="docs/src/cracking and dis_load output.png" width="750"/>
 </p>
+
 The splitting failure of concrete after the steel is pulled out is like:
 <p align="center">
     <img src="docs/src/concrete cracking after steel peeling out.png" width="450"/>
 </p>
+
 Notice that Paraview has rich functionality in beautifying plots.
 
 ## References
