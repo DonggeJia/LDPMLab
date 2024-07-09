@@ -88,6 +88,7 @@ A demonstration of the procedure from particle distribution to Delaunay tetrahed
 <p align="center">
     <img src="docs/src/from particle to mesh.png" width="750"/>
 </p>
+
 - For particle-reinforced material:
     ```
     Meshing(LDPM, "Yes", "../output examples/LDPM_mesh_facets")
