@@ -70,7 +70,7 @@ and you are ready to go.
     ```
     particle_distribution(LDPM_bar_reforced, "Yes", "../output examples/LDPM_geometry")
     ```
-A particle gradation curve will be generated after running this function, for example,
+The particle size distribution will be generated after running this function, for example,
 
 <p align="center">
     <img src="docs/src/particle size generation.png" width="550"/>
