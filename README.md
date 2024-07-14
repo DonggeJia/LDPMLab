@@ -154,8 +154,10 @@ for particle-reinforced materials with reinforcing bars.
 After this step, you already get the solution. A further step helps to output results and plot beautiful cracking patterns.
 ### 7. Post-process
     
-Post-process uses a function like `post_process(model_name, relative_time_of_cracking_=[0.4, 0.8, 1.0], crack_plot_dirc_and_name_="../output examples/cracking pattern", output_displacement_directions_=[[[90 110; 0 200; 0 10], [3]]], output_load_directions_=[[[90 110; 0 200; 60 70], [3]]], step_interval_=300, load_dis_out_name_="../output examples/200_200_70_deck", plot_dis_load_region_="Yes")`.
-
+Post-process uses a function like 
+```
+post_process(model_name, relative_time_of_cracking_=[0.4, 0.8, 1.0], crack_plot_dirc_and_name_="../output examples/cracking pattern", output_displacement_directions_=[[[90 110; 0 200; 0 10], [3]]], output_load_directions_=[[[90 110; 0 200; 60 70], [3]]], step_interval_=300, load_dis_out_name_="../output examples/200_200_70_deck", plot_dis_load_region_="Yes")
+```
 `model_name` should be `LDPM` for particle-reinforced materials and `LDPM_bar_reforced` for particle-reinforced materials with reinforcing bars.
 
 This function enables you to output cracking data as vtk files at different time steps during the solution by `relative_time_of_cracking_`. By default, the cracking pattern plots will be generated at the time steps around `0.4` $\times$ `total time`, `0.8` $\times$ `total time`, and `1.0` $\times$ `total time`. 
