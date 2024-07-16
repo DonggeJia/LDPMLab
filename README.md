@@ -8,7 +8,7 @@
 
 - The application can also be extended to homogeneous materials when particles are no longer realistically present, becoming a computationally more efficient substitute for FEM.
 
-- This package is developed under the supervision of Prof. Fascetti and Prof. Brigham at the University of Pittsburgh. 
+- This package is developed under the supervision of Prof. Fascetti and Prof. Brigham at University of Pittsburgh. 
 
 # Universal Applications
 - Specially for:
