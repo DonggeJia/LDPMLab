@@ -197,6 +197,4 @@ Notice that Paraview has rich functionality in beautifying plots.
 
 ## References
 
-Jia, D., Brigham, J. C., & Fascetti, A. (2024). An efficient static solver for the lattice discrete particle model. Computer-Aided Civil and Infrastructure Engineering, accepted.
-
-Fascetti, A., Bolander, J. E., & Nisticó, N. (2018). Lattice discrete particle modeling of concrete under compressive loading: Multiscale experimental approach for parameter determination. Journal of Engineering Mechanics, 144(8), 04018058.
+Jia, D., Brigham, J. C., & Fascetti, A. (2024). An efficient static solver for the lattice discrete particle model. *Computer-Aided Civil and Infrastructure Engineering*, accepted.
