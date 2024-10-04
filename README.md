@@ -197,4 +197,4 @@ Notice that Paraview has rich functionality in beautifying plots.
 
 ## References
 
-Jia, D., Brigham, J. C., & Fascetti, A. (2024). An efficient static solver for the lattice discrete particle model. *Computer-Aided Civil and Infrastructure Engineering*, accepted.
+Jia, D., Brigham, J. C., & Fascetti, A. (2024). An efficient static solver for the lattice discrete particle model. *Computer-Aided Civil and Infrastructure Engineering*,1–21. https://doi.org/10.1111/mice.13306
