@@ -193,6 +193,15 @@ The splitting failure of concrete after the steel is pulled out is like:
 
 Notice that Paraview has rich functionality in beautifying plots.
 
-## References
+## Citation
 
-Jia, D., Brigham, J. C., & Fascetti, A. (2024). An efficient static solver for the lattice discrete particle model. *Computer-Aided Civil and Infrastructure Engineering*,1–21. https://doi.org/10.1111/mice.13306
+If you find our work useful, please consider citing: 
+```
+@article{jia2024efficient,
+  title={An efficient static solver for the lattice discrete particle model},
+  author={Jia, Dongge and Brigham, John C and Fascetti, Alessandro},
+  journal={Computer-Aided Civil and Infrastructure Engineering},
+  year={2024},
+  publisher={Wiley Online Library}
+}
+```
