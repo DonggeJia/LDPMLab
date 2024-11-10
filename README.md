@@ -2,13 +2,11 @@
     <img src="docs/src/icon_for_LDPMLab.png" width="450"/>
 </p>
 
-- LDPMLab is an integral, open-source, high-performance Julia package for the state-of-the-art Lattice Discrete Particle Model (LDPM), first innovated by Prof. Cusatis of Northwestern in 2011. 
+- LDPMLab is an integral, open-source, high-performance Julia package for the state-of-the-art Lattice Discrete Particle Model (LDPM), first innovated by Prof. Cusatis of Northwestern in 2011. This package is developed under the supervision of Prof. Fascetti and Prof. Brigham at University of Pittsburgh.
 
 - This software tracks the cutting-edge advancements of LDPM, incorporating its variants in simulating mechanical and fracture behaviors of particle-reinforced materials with or without bar reinforcements, and mass transportation in heterogeneous materials. 
 
 - The application can also be extended to homogeneous materials when particles are no longer realistically present, becoming a computationally more efficient substitute for FEM.
-
-- This package is developed under the supervision of Prof. Fascetti and Prof. Brigham at University of Pittsburgh. 
 
 # Universal Applications
 - Specially for:
